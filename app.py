@@ -815,9 +815,11 @@ def main():
                                 # Crear PDF con marcas de corte
                                 pdf_bytes = create_pdf_with_crop_marks(resized_image, width_cm, height_cm, bleed_cm=0.5)
                                 
-                                # Guardar en session state para descarga
+                                # Leer los bytes del PDF
+                                pdf_data = pdf_bytes.read()
+                                
+                                # Nombre del archivo
                                 pdf_filename = f"FPP_{selected_service}_{client_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf"
-                                st.session_state.generated_pdfs[pdf_filename] = pdf_bytes
                                 
                                 # Descuento de inventario
                                 idx = st.session_state.services_by_measure[
@@ -840,10 +842,10 @@ def main():
                                     st.session_state.sales_history, new_sale
                                 ], ignore_index=True)
                                 
-                                st.success("✅ PDF generado exitosamente e inventario actualizado!")
+                                st.success("PDF generado exitosamente e inventario actualizado!")
                                 st.download_button(
                                     label="Descargar FPP para Plotter",
-                                    data=pdf_bytes.getvalue(),
+                                    data=pdf_data,
                                     file_name=pdf_filename,
                                     mime="application/pdf"
                                 )
@@ -1027,7 +1029,7 @@ def main():
         with col1:
             st.markdown("""
             <div class="card">
-                <h3>📝 Datos del Recibo</h3>
+                <h3>Datos del Recibo</h3>
             </div>
             """, unsafe_allow_html=True)
             
@@ -1035,7 +1037,7 @@ def main():
             
             st.markdown("""
             <div class="card">
-                <h3>📋 Items del Recibo</h3>
+                <h3>Items del Recibo</h3>
             </div>
             """, unsafe_allow_html=True)
             
@@ -1070,7 +1072,7 @@ def main():
             
             st.markdown("""
             <div class="card">
-                <h3>💰 Totales</h3>
+                <h3>Totales</h3>
             </div>
             """, unsafe_allow_html=True)
             col_t1, col_t2, col_t3 = st.columns(3)
@@ -1081,22 +1083,25 @@ def main():
             with col_t3:
                 st.metric("Total", format_currency(total))
             
-            if st.button("🧾 Generar Recibo PDF", key="generate_receipt"):
+            if st.button("Generar Recibo PDF", key="generate_receipt"):
                 if receipt_client and any(item['descripcion'] for item in receipt_items):
                     try:
                         pdf_buffer = generate_receipt_pdf(receipt_client, receipt_items, subtotal, iva, total)
                         
-                        st.success("✅ Recibo generado exitosamente!")
+                        # Leer los bytes del PDF
+                        pdf_data = pdf_buffer.getvalue()
+                        
+                        st.success("Recibo generado exitosamente!")
                         st.download_button(
-                            label="📥 Descargar Recibo PDF",
-                            data=pdf_buffer.getvalue(),
+                            label="Descargar Recibo PDF",
+                            data=pdf_data,
                             file_name=f"Recibo_{receipt_client}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf",
                             mime="application/pdf"
                         )
                     except Exception as e:
                         st.error(f"Error al generar recibo: {str(e)}")
                 else:
-                    st.warning("⚠️ Por favor complete el nombre del cliente y al menos un item.")
+                    st.warning("Por favor complete el nombre del cliente y al menos un item.")
     
     # Footer
     st.markdown("""
