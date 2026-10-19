@@ -24,272 +24,348 @@ st.set_page_config(
 st.markdown("""
 <style>
     /* Importar fuentes modernas */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
     
-    /* Estilos generales - Dark Theme */
+    /* Estilos generales - Dark Theme Premium */
     .stApp {
-        background-color: #0E1117;
+        background-color: #0a0e14;
     }
     
     .main {
-        background: linear-gradient(135deg, #0E1117 0%, #1a1d24 100%);
+        background: linear-gradient(180deg, #0a0e14 0%, #111827 50%, #0f172a 100%);
         font-family: 'Inter', sans-serif;
-        color: #ffffff;
+        color: #e2e8f0;
     }
     
-    /* Header principal */
+    /* Header principal - Premium */
     .header-container {
-        background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
-        padding: 2rem;
-        border-radius: 12px;
-        margin-bottom: 2rem;
-        box-shadow: 0 8px 32px rgba(30, 58, 138, 0.4);
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+        padding: 1.5rem 2rem;
+        border-radius: 16px;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 
+                    0 0 0 1px rgba(255, 255, 255, 0.05),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
         position: relative;
         overflow: hidden;
-        border: 1px solid rgba(59, 130, 246, 0.3);
     }
     
     .header-container::before {
         content: '';
         position: absolute;
-        top: -50%;
-        right: -50%;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
     }
     
-    /* Cards - Dark Theme */
+    .header-container::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -30%;
+        width: 60%;
+        height: 200%;
+        background: radial-gradient(ellipse, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+        pointer-events: none;
+    }
+    
+    /* Cards - Premium Glassmorphism */
     .card {
-        background: linear-gradient(135deg, #1a1d24 0%, #252830 100%);
-        padding: 2rem;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        margin-bottom: 1.5rem;
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        padding: 1.75rem;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+                    0 0 0 1px rgba(255, 255, 255, 0.05);
+        margin-bottom: 1.25rem;
         border: 1px solid rgba(255, 255, 255, 0.08);
-        transition: all 0.3s ease;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .card:hover {
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5),
+                    0 0 0 1px rgba(59, 130, 246, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
         border-color: rgba(59, 130, 246, 0.3);
-        transform: translateY(-2px);
+        transform: translateY(-4px);
     }
     
-    /* Sidebar - Dark Theme */
+    /* Sidebar - Premium */
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #1a1d24 0%, #252830 100%);
-        padding: 1rem;
+        background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+        padding: 1.5rem;
         border-right: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
     }
     
     [data-testid="stSidebar"] > div {
         background: transparent;
     }
     
-    [data-testid="stSidebar"] .css-1d391kg {
-        background: rgba(30, 58, 138, 0.2);
-        border-radius: 10px;
-        padding: 1rem;
-        margin-bottom: 0.75rem;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(59, 130, 246, 0.2);
-    }
-    
-    /* Métricas en sidebar */
+    /* Métricas en sidebar - Premium */
     [data-testid="stSidebar"] [data-testid="stMetric"] {
-        background: rgba(30, 58, 138, 0.15);
-        border-radius: 10px;
-        padding: 1.25rem;
-        margin-bottom: 0.75rem;
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
         backdrop-filter: blur(10px);
-        border: 1px solid rgba(59, 130, 246, 0.2);
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin-bottom: 0.875rem;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
     }
     
     [data-testid="stSidebar"] [data-testid="stMetric"] label {
-        color: rgba(255, 255, 255, 0.85) !important;
+        color: rgba(148, 163, 184, 0.9) !important;
         font-weight: 500;
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
     }
     
     [data-testid="stSidebar"] [data-testid="stMetric"] [data-testid="stMetricValue"] {
-        color: #3B82F6 !important;
+        color: #60a5fa !important;
         font-weight: 700;
+        font-size: 1.6rem;
     }
     
-    /* Títulos */
+    /* Títulos - Premium */
     h1 {
-        color: #ffffff;
+        color: #f1f5f9;
         font-weight: 800;
-        letter-spacing: -0.5px;
+        letter-spacing: -0.75px;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
     
     h2 {
-        color: #3B82F6;
+        color: #60a5fa;
         font-weight: 700;
-        letter-spacing: -0.3px;
+        letter-spacing: -0.5px;
     }
     
     h3 {
-        color: #60A5FA;
+        color: #94a3b8;
         font-weight: 600;
-        letter-spacing: -0.2px;
+        letter-spacing: -0.25px;
     }
     
-    /* Botones */
+    /* Botones - Premium */
     .stButton > button {
-        background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
         color: white;
         border: none;
-        border-radius: 10px;
-        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        padding: 0.875rem 1.75rem;
         font-weight: 600;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
         font-size: 0.95rem;
+        letter-spacing: 0.25px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4),
+                    0 0 0 1px rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .stButton > button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+    }
+    
+    .stButton > button:hover::before {
+        left: 100%;
     }
     
     .stButton > button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
-        background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(59, 130, 246, 0.5),
+                    0 0 0 1px rgba(255, 255, 255, 0.2);
+        background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
     }
     
     .stButton > button:active {
         transform: translateY(-1px);
     }
     
-    /* Tabs - Dark Theme */
+    /* Tabs - Premium */
     [data-testid="stTabs"] [role="tablist"] {
-        background: rgba(26, 29, 36, 0.8);
-        border-radius: 12px;
-        padding: 0.5rem;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        gap: 0.5rem;
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        padding: 0.625rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+                    0 0 0 1px rgba(255, 255, 255, 0.05);
+        gap: 0.375rem;
         border: 1px solid rgba(255, 255, 255, 0.08);
     }
     
     [data-testid="stTabs"] [role="tab"][aria-selected="true"] {
-        background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
         color: white;
-        border-radius: 8px;
+        border-radius: 10px;
         font-weight: 600;
-        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        font-size: 0.95rem;
+        padding: 0.75rem 1.25rem;
+        box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4),
+                    0 0 0 1px rgba(255, 255, 255, 0.1);
     }
     
     [data-testid="stTabs"] [role="tab"][aria-selected="false"] {
-        color: #94A3B8;
+        color: #94a3b8;
         font-weight: 500;
+        font-size: 0.9rem;
+        padding: 0.75rem 1.25rem;
+        transition: all 0.3s ease;
     }
     
     [data-testid="stTabs"] [role="tab"][aria-selected="false"]:hover {
         background: rgba(59, 130, 246, 0.15);
-        color: #ffffff;
+        color: #f1f5f9;
     }
     
-    /* Info boxes - Dark Theme */
+    /* Info boxes - Premium */
     .stAlert {
-        border-radius: 10px;
+        border-radius: 12px;
         border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        background: rgba(26, 29, 36, 0.9);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+        backdrop-filter: blur(10px);
     }
     
-    /* Dataframes - Dark Theme */
+    /* Dataframes - Premium */
     [data-testid="stDataFrame"] {
-        border-radius: 10px;
+        border-radius: 12px;
         overflow: hidden;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3),
+                    0 0 0 1px rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.08);
     }
     
-    /* Inputs - Dark Theme */
+    /* Inputs - Premium */
     .stTextInput > div > div > input,
     .stNumberInput > div > div > input,
     .stSelectbox > div > div > select {
-        background: rgba(26, 29, 36, 0.8);
-        border-radius: 8px;
-        border: 2px solid rgba(255, 255, 255, 0.15);
-        color: #ffffff;
-        transition: all 0.3s ease;
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+        backdrop-filter: blur(10px);
+        border-radius: 10px;
+        border: 2px solid rgba(255, 255, 255, 0.12);
+        color: #f1f5f9;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        font-family: 'Inter', sans-serif;
     }
     
     .stTextInput > div > div > input:focus,
     .stNumberInput > div > div > input:focus,
     .stSelectbox > div > div > select:focus {
-        border-color: #3B82F6;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-        background: rgba(30, 58, 138, 0.2);
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15),
+                    0 0 0 1px rgba(59, 130, 246, 0.3);
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 1) 100%);
     }
     
-    /* Metrics - Dark Theme */
+    /* Metrics - Premium */
     [data-testid="stMetric"] {
-        background: linear-gradient(135deg, #1a1d24 0%, #252830 100%);
-        border-radius: 10px;
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
         padding: 1.5rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3),
+                    0 0 0 1px rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.08);
     }
     
     [data-testid="stMetric"] label {
-        color: #94A3B8;
+        color: #94a3b8;
         font-weight: 600;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
     }
     
     [data-testid="stMetric"] [data-testid="stMetricValue"] {
-        color: #3B82F6;
+        color: #60a5fa;
         font-weight: 700;
-        font-size: 1.8rem;
+        font-size: 1.9rem;
+        letter-spacing: -0.5px;
     }
     
-    /* File uploader - Dark Theme */
+    /* File uploader - Premium */
     [data-testid="stFileUploader"] {
-        border-radius: 10px;
-        border: 2px dashed rgba(59, 130, 246, 0.5);
-        background: rgba(30, 58, 138, 0.1);
+        border-radius: 12px;
+        border: 2px dashed rgba(59, 130, 246, 0.4);
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
     }
     
-    /* Download button */
+    [data-testid="stFileUploader"]:hover {
+        border-color: rgba(59, 130, 246, 0.6);
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+    }
+    
+    /* Download button - Premium */
     .stDownloadButton > button {
-        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-        border-radius: 10px;
+        background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+        border-radius: 12px;
         font-weight: 600;
-        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        font-size: 0.95rem;
+        padding: 0.875rem 1.75rem;
+        box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4),
+                    0 0 0 1px rgba(255, 255, 255, 0.1);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .stDownloadButton > button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+        box-shadow: 0 8px 24px rgba(16, 185, 129, 0.5),
+                    0 0 0 1px rgba(255, 255, 255, 0.2);
+        background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
     }
     
-    /* Scrollbar styling - Dark Theme */
+    /* Scrollbar - Premium */
     ::-webkit-scrollbar {
-        width: 8px;
+        width: 10px;
+        height: 10px;
     }
     
     ::-webkit-scrollbar-track {
-        background: #1a1d24;
+        background: #0f172a;
         border-radius: 10px;
     }
     
     ::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
         border-radius: 10px;
+        border: 2px solid #0f172a;
     }
     
     ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
+        background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
     }
     
-    /* Text colors for dark theme */
+    /* Text colors - Premium */
     p, span, div {
-        color: #E2E8F0;
+        color: #cbd5e1;
     }
     
-    /* Label colors */
+    /* Label colors - Premium */
     label {
-        color: #94A3B8;
+        color: #94a3b8;
         font-weight: 500;
+        font-size: 0.9rem;
+    }
+    
+    /* Divider */
+    hr {
+        border: none;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        margin: 1.5rem 0;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -612,13 +688,32 @@ def main():
     # Header principal
     st.markdown("""
     <div class="header-container">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1;">
             <div>
-                <h1 style="color: white; margin: 0; font-size: 2.5rem; font-weight: 800; letter-spacing: -1px;">🎨 VISION PUBLICIDAD</h1>
-                <p style="color: rgba(255,255,255,0.9); margin: 0.5rem 0 0 0; font-size: 1.1rem; font-weight: 500;">Sistema de Gestión Operativa</p>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="font-size: 2.5rem;">🎨</div>
+                    <div>
+                        <h1 style="color: #f1f5f9; margin: 0; font-size: 2rem; font-weight: 800; letter-spacing: -0.75px; line-height: 1.2;">VISION PUBLICIDAD</h1>
+                        <p style="color: rgba(148, 163, 184, 0.9); margin: 0.25rem 0 0 0; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.25px;">Sistema de Gestión Operativa</p>
+                    </div>
+                </div>
             </div>
-            <div style="text-align: right;">
-                <span style="background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600;">🔧 Administrador</span>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.3) 100%); 
+                            border: 1px solid rgba(59, 130, 246, 0.3); 
+                            padding: 0.625rem 1.25rem; 
+                            border-radius: 10px; 
+                            font-size: 0.85rem; 
+                            font-weight: 600; 
+                            color: #60a5fa;
+                            backdrop-filter: blur(10px);
+                            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+                            display: flex; 
+                            align-items: center; 
+                            gap: 0.5rem;">
+                    <span>⚙️</span>
+                    <span>Administrador</span>
+                </div>
             </div>
         </div>
     </div>
@@ -667,25 +762,35 @@ def main():
     # =============================================
     with tab1:
         st.markdown("""
-        <div class="card">
-            <h2>📐 Cotizador Gran Formato y Preprensa (FPP)</h2>
-            <p>Cotice y genere archivos PDF listos para impresión con marcas de corte vectoriales.</p>
+        <div style="margin-bottom: 1.5rem;">
+            <h2 style="color: #60a5fa; font-size: 1.75rem; font-weight: 700; margin: 0 0 0.5rem 0; letter-spacing: -0.5px;">📐 Cotizador Gran Formato y Preprensa</h2>
+            <p style="color: #94a3b8; margin: 0; font-size: 0.95rem;">Cotice y genere archivos PDF listos para impresión con marcas de corte vectoriales.</p>
         </div>
         """, unsafe_allow_html=True)
         
         col1, col2 = st.columns([1, 1])
         
         with col1:
+            # Sección 1: Cotización y Medidas
             st.markdown("""
-            <div class="card">
-                <h3>📝 Datos del Cliente y Servicio</h3>
+            <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+                       backdrop-filter: blur(10px);
+                       border-radius: 16px;
+                       padding: 1.5rem;
+                       border: 1px solid rgba(255, 255, 255, 0.08);
+                       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                       margin-bottom: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+                    <span style="font-size: 1.5rem;">📐</span>
+                    <h3 style="color: #f1f5f9; margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.25px;">1. Cotización y Medidas</h3>
+                </div>
             </div>
             """, unsafe_allow_html=True)
             
             client_name = st.text_input("Nombre del Cliente", key="gf_client")
             
             service_options = st.session_state.services_by_measure['servicio'].tolist()
-            selected_service = st.selectbox("Seleccione el Servicio", service_options, key="gf_service")
+            selected_service = st.selectbox("Servicio / Material", service_options, key="gf_service")
             
             # Obtener datos del servicio seleccionado
             service_data = st.session_state.services_by_measure[
@@ -707,28 +812,55 @@ def main():
                 service_data['factor']
             )
             
+            # Indicadores de costo - estilo destacado
             st.markdown("""
-            <div class="card">
-                <h3>💰 Cotización</h3>
+            <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+                       backdrop-filter: blur(10px);
+                       border-radius: 16px;
+                       padding: 1.5rem;
+                       border: 1px solid rgba(255, 255, 255, 0.08);
+                       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                       margin-bottom: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem;">
+                    <span style="font-size: 1.5rem;">💰</span>
+                    <h3 style="color: #f1f5f9; margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.25px;">Resumen de Costos</h3>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <div style="background: rgba(59, 130, 246, 0.1); padding: 1rem; border-radius: 10px; border: 1px solid rgba(59, 130, 246, 0.2);">
+                        <div style="color: #94a3b8; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">Costo por Fórmula</div>
+                        <div style="color: #60a5fa; font-size: 1.5rem; font-weight: 700;">""" + format_currency(unit_price) + """</div>
+                    </div>
+                    <div style="background: rgba(59, 130, 246, 0.1); padding: 1rem; border-radius: 10px; border: 1px solid rgba(59, 130, 246, 0.2);">
+                        <div style="color: #94a3b8; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">Tarifa Mínima Aplicable</div>
+                        <div style="color: #60a5fa; font-size: 1.5rem; font-weight: 700;">""" + format_currency(service_data['tarifa_minima']) + """</div>
+                    </div>
+                </div>
+                <div style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); padding: 1.25rem; border-radius: 12px; box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);">
+                    <div style="color: rgba(255, 255, 255, 0.9); font-size: 0.9rem; font-weight: 500; margin-bottom: 0.5rem;">TOTAL A COBRAR</div>
+                    <div style="color: white; font-size: 2rem; font-weight: 800; letter-spacing: -0.5px;">""" + format_currency(total_price) + """</div>
+                </div>
             </div>
             """, unsafe_allow_html=True)
-            col_p1, col_p2 = st.columns(2)
-            with col_p1:
-                st.metric("Precio Unitario", format_currency(unit_price))
-            with col_p2:
-                st.metric("Precio Total", format_currency(total_price))
-            
-            st.info(f"📌 Fórmula aplicada: MAX({width_cm} × {height_cm} × {service_data['factor']/100}, {format_currency(service_data['tarifa_minima'])}) × {quantity}")
         
         with col2:
+            # Sección 2: Preprensa Digital y Archivos
             st.markdown("""
-            <div class="card">
-                <h3>🖼️ Carga de Imagen y Generación PDF</h3>
+            <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+                       backdrop-filter: blur(10px);
+                       border-radius: 16px;
+                       padding: 1.5rem;
+                       border: 1px solid rgba(255, 255, 255, 0.08);
+                       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                       margin-bottom: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+                    <span style="font-size: 1.5rem;">🖼️</span>
+                    <h3 style="color: #f1f5f9; margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.25px;">2. Preprensa Digital y Archivos</h3>
+                </div>
             </div>
             """, unsafe_allow_html=True)
             
             uploaded_file = st.file_uploader(
-                "Cargue la imagen (JPG/PNG)",
+                "Subir archivo del arte (JPG, PNG)",
                 type=['jpg', 'jpeg', 'png'],
                 key="gf_image"
             )
@@ -745,7 +877,7 @@ def main():
                     st.image(image_pil, caption="Vista previa de la imagen", use_column_width=True)
                     
                     # Botón para generar PDF
-                    if st.button("🚀 Generar PDF con Marcas de Corte", key="gf_generate"):
+                    if st.button("Generar PDF FPP con Marcas de Corte", key="gf_generate"):
                         with st.spinner("Procesando imagen y generando PDF..."):
                             try:
                                 # Redimensionar imagen
@@ -781,7 +913,7 @@ def main():
                                 
                                 st.success("✅ PDF generado exitosamente e inventario actualizado!")
                                 st.download_button(
-                                    label="📥 Descargar PDF FPP",
+                                    label="Descargar FPP para Plotter",
                                     data=pdf_bytes.getvalue(),
                                     file_name=pdf_filename,
                                     mime="application/pdf"
@@ -1039,10 +1171,22 @@ def main():
     
     # Footer
     st.markdown("""
-    <div style="margin-top: 3rem; padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
-        <p style="color: #64748b; margin: 0; font-size: 0.85rem;">v2.4.1 | © 2016 VISION PUBLICIDAD e Ingeniería</p>
-        <p style="color: #10B981; margin: 0.5rem 0 0 0; font-size: 0.8rem;">● Estado de red activo</p>
+    <div style="margin-top: 3rem; padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); text-align: center; background: linear-gradient(135deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%); border-radius: 12px;">
+        <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; flex-wrap: wrap;">
+            <div style="color: #64748b; font-size: 0.85rem; font-weight: 500;">v2.4.1</div>
+            <div style="color: #64748b; font-size: 0.85rem; font-weight: 500;">© 2016 VISION PUBLICIDAD e Ingeniería</div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; color: #10B981; font-size: 0.8rem; font-weight: 600;">
+                <span style="width: 8px; height: 8px; background: #10B981; border-radius: 50%; animation: pulse 2s infinite;"></span>
+                Estado de red activo
+            </div>
+        </div>
     </div>
+    <style>
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
     """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
