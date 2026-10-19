@@ -23,96 +23,273 @@ st.set_page_config(
 # CSS personalizado para mejor diseño
 st.markdown("""
 <style>
-    /* Estilos generales */
+    /* Importar fuentes modernas */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    
+    /* Estilos generales - Dark Theme */
+    .stApp {
+        background-color: #0E1117;
+    }
+    
     .main {
-        background-color: #f8fafc;
+        background: linear-gradient(135deg, #0E1117 0%, #1a1d24 100%);
+        font-family: 'Inter', sans-serif;
+        color: #ffffff;
     }
     
     /* Header principal */
     .header-container {
-        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
         padding: 2rem;
-        border-radius: 10px;
+        border-radius: 12px;
         margin-bottom: 2rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 32px rgba(30, 58, 138, 0.4);
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(59, 130, 246, 0.3);
     }
     
-    /* Cards */
+    .header-container::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+    }
+    
+    /* Cards - Dark Theme */
     .card {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 10px;
-    
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #1a1d24 0%, #252830 100%);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        margin-bottom: 1.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.3s ease;
     }
     
-    /* Sidebar */
+    .card:hover {
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        border-color: rgba(59, 130, 246, 0.3);
+        transform: translateY(-2px);
+    }
+    
+    /* Sidebar - Dark Theme */
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%);
+        background: linear-gradient(180deg, #1a1d24 0%, #252830 100%);
+        padding: 1rem;
+        border-right: 1px solid rgba(255, 255, 255, 0.08);
     }
     
     [data-testid="stSidebar"] > div {
         background: transparent;
     }
     
+    [data-testid="stSidebar"] .css-1d391kg {
+        background: rgba(30, 58, 138, 0.2);
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+    
     /* Métricas en sidebar */
     [data-testid="stSidebar"] [data-testid="stMetric"] {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        padding: 1rem;
-        margin-bottom: 0.5rem;
+        background: rgba(30, 58, 138, 0.15);
+        border-radius: 10px;
+        padding: 1.25rem;
+        margin-bottom: 0.75rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+    
+    [data-testid="stSidebar"] [data-testid="stMetric"] label {
+        color: rgba(255, 255, 255, 0.85) !important;
+        font-weight: 500;
+    }
+    
+    [data-testid="stSidebar"] [data-testid="stMetric"] [data-testid="stMetricValue"] {
+        color: #3B82F6 !important;
+        font-weight: 700;
     }
     
     /* Títulos */
     h1 {
-        color: #1e3a8a;
-        font-weight: 700;
+        color: #ffffff;
+        font-weight: 800;
+        letter-spacing: -0.5px;
     }
     
     h2 {
-        color: #1e40af;
-        font-weight: 600;
+        color: #3B82F6;
+        font-weight: 700;
+        letter-spacing: -0.3px;
     }
     
     h3 {
-        color: #3b82f6;
+        color: #60A5FA;
         font-weight: 600;
+        letter-spacing: -0.2px;
     }
     
     /* Botones */
     .stButton > button {
-        background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+        background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
         color: white;
         border: none;
-        border-radius: 8px;
-        padding: 0.5rem 1rem;
+        border-radius: 10px;
+        padding: 0.75rem 1.5rem;
         font-weight: 600;
         transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        font-size: 0.95rem;
     }
     
     .stButton > button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+        background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
     }
     
-    /* Tabs */
+    .stButton > button:active {
+        transform: translateY(-1px);
+    }
+    
+    /* Tabs - Dark Theme */
     [data-testid="stTabs"] [role="tablist"] {
-        background: white;
-        border-radius: 10px;
+        background: rgba(26, 29, 36, 0.8);
+        border-radius: 12px;
         padding: 0.5rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        gap: 0.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.08);
     }
     
-    /* Info boxes */
+    [data-testid="stTabs"] [role="tab"][aria-selected="true"] {
+        background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+        color: white;
+        border-radius: 8px;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+    }
+    
+    [data-testid="stTabs"] [role="tab"][aria-selected="false"] {
+        color: #94A3B8;
+        font-weight: 500;
+    }
+    
+    [data-testid="stTabs"] [role="tab"][aria-selected="false"]:hover {
+        background: rgba(59, 130, 246, 0.15);
+        color: #ffffff;
+    }
+    
+    /* Info boxes - Dark Theme */
     .stAlert {
-        border-radius: 8px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        background: rgba(26, 29, 36, 0.9);
     }
     
-    /* Dataframes */
+    /* Dataframes - Dark Theme */
     [data-testid="stDataFrame"] {
-        border-radius: 8px;
+        border-radius: 10px;
         overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    /* Inputs - Dark Theme */
+    .stTextInput > div > div > input,
+    .stNumberInput > div > div > input,
+    .stSelectbox > div > div > select {
+        background: rgba(26, 29, 36, 0.8);
+        border-radius: 8px;
+        border: 2px solid rgba(255, 255, 255, 0.15);
+        color: #ffffff;
+        transition: all 0.3s ease;
+    }
+    
+    .stTextInput > div > div > input:focus,
+    .stNumberInput > div > div > input:focus,
+    .stSelectbox > div > div > select:focus {
+        border-color: #3B82F6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        background: rgba(30, 58, 138, 0.2);
+    }
+    
+    /* Metrics - Dark Theme */
+    [data-testid="stMetric"] {
+        background: linear-gradient(135deg, #1a1d24 0%, #252830 100%);
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    [data-testid="stMetric"] label {
+        color: #94A3B8;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+    
+    [data-testid="stMetric"] [data-testid="stMetricValue"] {
+        color: #3B82F6;
+        font-weight: 700;
+        font-size: 1.8rem;
+    }
+    
+    /* File uploader - Dark Theme */
+    [data-testid="stFileUploader"] {
+        border-radius: 10px;
+        border: 2px dashed rgba(59, 130, 246, 0.5);
+        background: rgba(30, 58, 138, 0.1);
+    }
+    
+    /* Download button */
+    .stDownloadButton > button {
+        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        border-radius: 10px;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    }
+    
+    .stDownloadButton > button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+    }
+    
+    /* Scrollbar styling - Dark Theme */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: #1a1d24;
+        border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+        border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
+    }
+    
+    /* Text colors for dark theme */
+    p, span, div {
+        color: #E2E8F0;
+    }
+    
+    /* Label colors */
+    label {
+        color: #94A3B8;
+        font-weight: 500;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -342,8 +519,8 @@ def generate_receipt_pdf(client_name, items, subtotal, iva, total):
     width, height = letter
     
     # Configuración de colores
-    header_color = colors.HexColor('#1E3A8A')  # Azul oscuro
-    line_color = colors.HexColor('#3B82F6')  # Azul claro
+    header_color = colors.HexColor('#1E3A8A')  # Dark blue
+    line_color = colors.HexColor('#3B82F6')  # Light blue
     
     # Dibujar encabezado
     c.setFillColor(header_color)
@@ -435,8 +612,15 @@ def main():
     # Header principal
     st.markdown("""
     <div class="header-container">
-        <h1 style="color: white; margin: 0; font-size: 2.5rem;">🎨 Visión Publicidad</h1>
-        <p style="color: rgba(255,255,255,0.9); margin: 0.5rem 0 0 0; font-size: 1.2rem;">Sistema de Gestión Operativa - Cotización, Preprensa e Inventario</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h1 style="color: white; margin: 0; font-size: 2.5rem; font-weight: 800; letter-spacing: -1px;">🎨 VISION PUBLICIDAD</h1>
+                <p style="color: rgba(255,255,255,0.9); margin: 0.5rem 0 0 0; font-size: 1.1rem; font-weight: 500;">Sistema de Gestión Operativa</p>
+            </div>
+            <div style="text-align: right;">
+                <span style="background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600;">🔧 Administrador</span>
+            </div>
+        </div>
     </div>
     """, unsafe_allow_html=True)
     
@@ -461,21 +645,21 @@ def main():
         st.metric("🧾 Transacciones", len(st.session_state.sales_history))
         
         st.markdown("---")
-        st.markdown("### ⏰ Horario")
-        st.success(f"📅 {datetime.now().strftime('%d/%m/%Y')}")
-        st.info(f"🕐 {datetime.now().strftime('%H:%M:%S')}")
+        st.markdown("### ⏰ Fecha y Hora")
+        st.markdown(f"📅 **{datetime.now().strftime('%d/%m/%Y')}**")
+        st.markdown(f"🕐 **{datetime.now().strftime('%H:%M:%S')}**")
         
         st.markdown("---")
         st.markdown("### 📞 Visión Publicidad")
         st.markdown("Sistema de Gestión Operativa")
-        st.caption("v2.0 - Cloud Ready")
+        st.caption("v2.4.1 - Professional Edition")
     
     # Pestañas principales
     tab1, tab2, tab3, tab4 = st.tabs([
         "📐 Cotizador Gran Formato",
-        "📦 Productos Fijos",
-        "📋 Inventario",
-        "🧾 Recibos/Facturas"
+        "📦 Papelería Comercial",
+        "📋 Control de Inventario",
+        "🧾 Facturación"
     ])
     
     # =============================================
@@ -849,34 +1033,17 @@ def main():
                             mime="application/pdf"
                         )
                     except Exception as e:
-                        st.error(f"Error al generar el recibo: {str(e)}")
+                        st.error(f"Error al generar recibo: {str(e)}")
                 else:
                     st.warning("⚠️ Por favor complete el nombre del cliente y al menos un item.")
-        
-        with col2:
-            st.markdown("""
-            <div class="card">
-                <h3>📊 Historial de Ventas</h3>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            if len(st.session_state.sales_history) > 0:
-                st.dataframe(
-                    st.session_state.sales_history.sort_values('fecha', ascending=False),
-                    use_container_width=True,
-                    hide_index=True
-                )
-                
-                # Opción para descargar historial
-                csv = st.session_state.sales_history.to_csv(index=False)
-                st.download_button(
-                    label="📥 Descargar Historial CSV",
-                    data=csv,
-                    file_name=f"historial_ventas_{datetime.now().strftime('%Y%m%d')}.csv",
-                    mime="text/csv"
-                )
-            else:
-                st.info("No hay ventas registradas aún.")
+    
+    # Footer
+    st.markdown("""
+    <div style="margin-top: 3rem; padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
+        <p style="color: #64748b; margin: 0; font-size: 0.85rem;">v2.4.1 | © 2016 VISION PUBLICIDAD e Ingeniería</p>
+        <p style="color: #10B981; margin: 0.5rem 0 0 0; font-size: 0.8rem;">● Estado de red activo</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
