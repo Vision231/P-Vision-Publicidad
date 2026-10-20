@@ -166,27 +166,64 @@ st.markdown("""
     /* Inputs con Glassmorphism */
     .stTextInput > div > div > input,
     .stNumberInput > div > div > input,
-    .stSelectbox > div > div > select {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+    .stSelectbox > div > div > select,
+    .stSelectbox > div > div > div {
+        background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%) !important;
         backdrop-filter: blur(10px);
-        border: 2px solid rgba(255, 255, 255, 0.15);
-        color: #ffffff;
-        border-radius: 12px;
+        border: 1px solid rgba(0, 212, 255, 0.3) !important;
+        border-radius: 12px !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        padding: 0.875rem 1rem;
+        font-weight: 500;
         transition: all 0.3s ease;
     }
     
     .stTextInput > div > div > input:focus,
-    .stNumberInput > div > div > input:focus {
-        border-color: #00d4ff;
-        box-shadow: 0 0 16px rgba(0, 212, 255, 0.3);
+    .stNumberInput > div > div > input:focus,
+    .stSelectbox > div > div > select:focus {
+        border-color: #00d4ff !important;
+        box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.2);
+        outline: none;
+    }
+    
+    /* Selectbox container */
+    .stSelectbox > div {
+        background: transparent !important;
+    }
+    
+    /* Text input container */
+    .stTextInput > div {
+        background: transparent !important;
+    }
+    
+    /* Number input container */
+    .stNumberInput > div {
+        background: transparent !important;
     }
     
     /* File uploader con efecto neón */
     [data-testid="stFileUploader"] {
-        border: 2px dashed rgba(0, 212, 255, 0.5);
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+        border: 2px dashed rgba(0, 212, 255, 0.5) !important;
+        background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%) !important;
         backdrop-filter: blur(10px);
-        border-radius: 16px;
+        border-radius: 16px !important;
+    }
+    
+    [data-testid="stFileUploader"] > div {
+        background: transparent !important;
+    }
+    
+    /* Input containers específicos */
+    [data-testid="stTextInput"] > div > div {
+        background: transparent !important;
+    }
+    
+    [data-testid="stNumberInput"] > div > div {
+        background: transparent !important;
+    }
+    
+    [data-testid="stSelectbox"] > div > div {
+        background: transparent !important;
     }
     
     /* Download button */
@@ -661,6 +698,266 @@ def main():
     
     # Sidebar con información y métricas modernas
     with st.sidebar:
+        # Aplicar CSS según el tema (Glassmorphism para ambos temas)
+        if st.session_state.theme_mode == "dark":
+            # CSS Dark Theme con Glassmorphism
+            st.markdown("""
+            <style>
+                /* Dark Theme con Glassmorphism */
+                [data-testid="stAppViewBlockContainer"] {
+                    background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+                    min-height: 100vh;
+                }
+                
+                [data-testid="stSidebar"] {
+                    background: linear-gradient(135deg, rgba(10, 10, 15, 0.95) 0%, rgba(26, 26, 46, 0.95) 100%);
+                    backdrop-filter: blur(20px);
+                    border-right: 1px solid rgba(0, 212, 255, 0.2);
+                }
+                
+                .header-container {
+                    background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(157, 78, 221, 0.15) 100%);
+                    backdrop-filter: blur(15px);
+                    border-radius: 20px;
+                    padding: 1.5rem 2rem;
+                    border: 1px solid rgba(0, 212, 255, 0.3);
+                    box-shadow: 0 8px 32px rgba(0, 212, 255, 0.2);
+                    margin-bottom: 2rem;
+                }
+                
+                .card {
+                    background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+                    backdrop-filter: blur(10px);
+                    border-radius: 16px;
+                    padding: 1.5rem;
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                    margin-bottom: 1.5rem;
+                }
+                
+                [data-testid="stTabs"] [role="tablist"] {
+                    background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(157, 78, 221, 0.15) 100%);
+                    backdrop-filter: blur(15px);
+                    border-radius: 16px;
+                    padding: 0.75rem;
+                    border: 1px solid rgba(0, 212, 255, 0.3);
+                }
+                
+                [data-testid="stTabs"] [role="tab"][aria-selected="true"] {
+                    background: linear-gradient(135deg, #00d4ff 0%, #9d4edd 100%);
+                    color: white;
+                    border-radius: 10px;
+                    font-weight: 600;
+                }
+                
+                [data-testid="stTabs"] [role="tab"][aria-selected="false"] {
+                    color: rgba(255, 255, 255, 0.6);
+                }
+                
+                [data-testid="stSidebar"] [data-testid="stMetric"] {
+                    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%);
+                    backdrop-filter: blur(10px);
+                    border-radius: 16px;
+                    padding: 1.5rem;
+                    border: 1px solid rgba(0, 212, 255, 0.2);
+                    box-shadow: 0 4px 16px rgba(0, 212, 255, 0.1);
+                }
+                
+                [data-testid="stSidebar"] [data-testid="stMetric"] label {
+                    color: rgba(255, 255, 255, 0.7);
+                    font-weight: 600;
+                    font-size: 0.85rem;
+                }
+                
+                [data-testid="stSidebar"] [data-testid="stMetric"] [data-testid="stMetricValue"] {
+                    color: #00d4ff !important;
+                    font-weight: 700;
+                    font-size: 1.5rem;
+                }
+                
+                /* Títulos con degradado neón */
+                h1 {
+                    color: rgba(255, 255, 255, 0.95);
+                    font-weight: 800;
+                    background: linear-gradient(135deg, #00d4ff 0%, #9d4edd 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                }
+                
+                h2 {
+                    color: rgba(255, 255, 255, 0.9);
+                    font-weight: 700;
+                }
+                
+                h3 {
+                    color: rgba(255, 255, 255, 0.85);
+                    font-weight: 600;
+                }
+                
+                /* Botones con degradado neón */
+                .stButton > button {
+                    background: linear-gradient(135deg, #00d4ff 0%, #9d4edd 100%);
+                    color: white;
+                    border-radius: 12px;
+                    padding: 0.875rem 2rem;
+                    font-weight: 600;
+                    border: none;
+                    box-shadow: 0 4px 16px rgba(0, 212, 255, 0.3);
+                    transition: all 0.3s ease;
+                }
+                
+                .stButton > button:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+                }
+                
+                [data-testid="stTabs"] [role="tab"][aria-selected="false"] {
+                    color: rgba(255, 255, 255, 0.6);
+                }
+                
+                /* Inputs con Glassmorphism */
+                .stTextInput > div > div > input,
+                .stNumberInput > div > div > input,
+                .stSelectbox > div > div > select,
+                .stSelectbox > div > div > div {
+                    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%) !important;
+                    backdrop-filter: blur(10px);
+                    border: 1px solid rgba(0, 212, 255, 0.3) !important;
+                    border-radius: 12px !important;
+                    color: rgba(255, 255, 255, 0.9) !important;
+                    padding: 0.875rem 1rem;
+                    font-weight: 500;
+                    transition: all 0.3s ease;
+                }
+                
+                .stTextInput > div > div > input:focus,
+                .stNumberInput > div > div > input:focus,
+                .stSelectbox > div > div > select:focus {
+                    border-color: #00d4ff !important;
+                    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.2);
+                    outline: none;
+                }
+                
+                /* Selectbox container */
+                .stSelectbox > div {
+                    background: transparent !important;
+                }
+                
+                /* Text input container */
+                .stTextInput > div {
+                    background: transparent !important;
+                }
+                
+                /* Number input container */
+                .stNumberInput > div {
+                    background: transparent !important;
+                }
+                
+                /* File uploader con efecto neón */
+                [data-testid="stFileUploader"] {
+                    border: 2px dashed rgba(0, 212, 255, 0.5) !important;
+                    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%) !important;
+                    backdrop-filter: blur(10px);
+                    border-radius: 16px !important;
+                }
+                
+                [data-testid="stFileUploader"] > div {
+                    background: transparent !important;
+                }
+                
+                /* Input containers específicos */
+                [data-testid="stTextInput"] > div > div {
+                    background: transparent !important;
+                }
+                
+                [data-testid="stNumberInput"] > div > div {
+                    background: transparent !important;
+                }
+                
+                [data-testid="stSelectbox"] > div > div {
+                    background: transparent !important;
+                }
+                
+                /* Download button */
+                .stDownloadButton > button {
+                    background: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
+                    color: white;
+                    border-radius: 12px;
+                    font-weight: 600;
+                    box-shadow: 0 4px 16px rgba(0, 255, 136, 0.3);
+                }
+                
+                /* Texto general */
+                p, span, div {
+                    color: rgba(255, 255, 255, 0.85);
+                }
+                
+                p, span {
+                    color: rgba(255, 255, 255, 0.85);
+                }
+                
+                label {
+                    color: rgba(255, 255, 255, 0.7);
+                    font-weight: 500;
+                }
+                
+                /* Eliminar fondos blancos de elementos Streamlit */
+                .stMarkdown, .stText, .stWrite {
+                    background: transparent !important;
+                }
+                
+                /* Ajustar colores de información */
+                .stAlert {
+                    background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(157, 78, 221, 0.15) 100%) !important;
+                    backdrop-filter: blur(10px);
+                    border: 1px solid rgba(0, 212, 255, 0.3);
+                    border-radius: 12px;
+                }
+                
+                .stSuccess {
+                    background: linear-gradient(135deg, rgba(0, 255, 136, 0.15) 0%, rgba(0, 212, 255, 0.15) 100%) !important;
+                    backdrop-filter: blur(10px);
+                    border: 1px solid rgba(0, 255, 136, 0.3);
+                    border-radius: 12px;
+                }
+                
+                .stWarning {
+                    background: linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(255, 152, 0, 0.15) 100%) !important;
+                    backdrop-filter: blur(10px);
+                    border: 1px solid rgba(255, 193, 7, 0.3);
+                    border-radius: 12px;
+                }
+                
+                .stError {
+                    background: linear-gradient(135deg, rgba(244, 67, 54, 0.15) 0%, rgba(233, 30, 99, 0.15) 100%) !important;
+                    backdrop-filter: blur(10px);
+                    border: 1px solid rgba(244, 67, 54, 0.3);
+                    border-radius: 12px;
+                }
+                
+                /* Métricas principales */
+                [data-testid="stMetric"] {
+                    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%);
+                    backdrop-filter: blur(10px);
+                    border-radius: 16px;
+                    padding: 1.5rem;
+                    border: 1px solid rgba(0, 212, 255, 0.2);
+                    box-shadow: 0 4px 16px rgba(0, 212, 255, 0.1);
+                }
+                
+                [data-testid="stMetric"] label {
+                    color: rgba(255, 255, 255, 0.7);
+                    font-weight: 600;
+                }
+                
+                [data-testid="stMetric"] [data-testid="stMetricValue"] {
+                    color: #00d4ff;
+                    font-weight: 700;
+                }
+            </style>
+            """, unsafe_allow_html=True)
+        
         st.markdown("""
         <div style="margin-bottom: 2rem;">
             <h2 style="margin: 0; font-size: 1.5rem; font-weight: 700; 
@@ -697,11 +994,8 @@ def main():
         </div>
         """, unsafe_allow_html=True)
         
-        # Ocultar el st.info predeterminado ya que usamos el personalizado
-        # No usar st.info() para evitar el fondo blanco
-        
         # Selector de modo (Dark/Light) - sincronizado con el botón del header
-        theme_mode = st.selectbox(
+        theme_mode_selection = st.selectbox(
             "Modo de Tema", 
             ["Dark", "Light"], 
             key="sidebar_theme_mode",
@@ -709,15 +1003,12 @@ def main():
         )
         
         # Actualizar session_state cuando cambia el tema desde el sidebar
-        if theme_mode.lower() != st.session_state.theme_mode:
-            st.session_state.theme_mode = theme_mode.lower()
+        if theme_mode_selection.lower() != st.session_state.theme_mode:
+            st.session_state.theme_mode = theme_mode_selection.lower()
             st.rerun()
         
-        # Aplicar CSS según el tema (Glassmorphism para ambos temas)
-        if st.session_state.theme_mode == "dark":
-            # El CSS Glassmorphism ya está aplicado globalmente
-            pass
-        else:  # Light theme con Glassmorphism
+        # Aplicar CSS Light Theme si está en modo light
+        if st.session_state.theme_mode == "light":
             st.markdown("""
             <style>
                 /* Light Theme con Glassmorphism */
@@ -803,7 +1094,14 @@ def main():
                 }
                 .stButton > button:hover {
                     transform: translateY(-2px);
-                    box-shadow: 0 6px 24px rgba(0, 102, 204, 0.5);
+                    box-shadow: 0 6px 20px rgba(0, 102, 204, 0.4);
+                }
+                .stDownloadButton > button {
+                    background: linear-gradient(135deg, #00cc66 0%, #0066cc 100%);
+                    color: white;
+                    border-radius: 12px;
+                    font-weight: 600;
+                    box-shadow: 0 4px 16px rgba(0, 204, 102, 0.3);
                 }
                 [data-testid="stTabs"] [role="tablist"] {
                     background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
@@ -839,24 +1137,63 @@ def main():
                 }
                 .stTextInput > div > div > input,
                 .stNumberInput > div > div > input,
-                .stSelectbox > div > div > select {
-                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+                .stSelectbox > div > div > select,
+                .stSelectbox > div > div > div {
+                    background: linear-gradient(135deg, rgba(0, 102, 204, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%) !important;
                     backdrop-filter: blur(10px);
-                    border: 2px solid rgba(0, 102, 204, 0.3);
-                    color: #333333;
-                    border-radius: 12px;
+                    border: 1px solid rgba(0, 102, 204, 0.3) !important;
+                    border-radius: 12px !important;
+                    color: #333333 !important;
+                    padding: 0.875rem 1rem;
+                    font-weight: 500;
                     transition: all 0.3s ease;
                 }
                 .stTextInput > div > div > input:focus,
-                .stNumberInput > div > div > input:focus {
-                    border-color: #0066cc;
-                    box-shadow: 0 0 16px rgba(0, 102, 204, 0.3);
+                .stNumberInput > div > div > input:focus,
+                .stSelectbox > div > div > select:focus {
+                    border-color: #0066cc !important;
+                    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2);
+                    outline: none;
                 }
+                
+                /* Selectbox container */
+                .stSelectbox > div {
+                    background: transparent !important;
+                }
+                
+                /* Text input container */
+                .stTextInput > div {
+                    background: transparent !important;
+                }
+                
+                /* Number input container */
+                .stNumberInput > div {
+                    background: transparent !important;
+                }
+                
+                /* File uploader con efecto neón - Light Theme */
                 [data-testid="stFileUploader"] {
-                    border: 2px dashed rgba(0, 102, 204, 0.5);
-                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+                    border: 2px dashed rgba(0, 102, 204, 0.5) !important;
+                    background: linear-gradient(135deg, rgba(0, 102, 204, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%) !important;
                     backdrop-filter: blur(10px);
-                    border-radius: 16px;
+                    border-radius: 16px !important;
+                }
+                
+                [data-testid="stFileUploader"] > div {
+                    background: transparent !important;
+                }
+                
+                /* Input containers específicos - Light Theme */
+                [data-testid="stTextInput"] > div > div {
+                    background: transparent !important;
+                }
+                
+                [data-testid="stNumberInput"] > div > div {
+                    background: transparent !important;
+                }
+                
+                [data-testid="stSelectbox"] > div > div {
+                    background: transparent !important;
                 }
                 .stDownloadButton > button {
                     background: linear-gradient(135deg, #00cc66 0%, #0066cc 100%);
