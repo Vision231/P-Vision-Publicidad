@@ -20,283 +20,212 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# CSS personalizado para mejor diseño
+# CSS personalizado para estilo Glassmorphism
 st.markdown("""
 <style>
     /* Importar fuentes modernas */
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
     
-    /* Estilos generales - Dark Theme como la imagen */
+    /* Variables CSS para tema Glassmorphism */
+    :root {
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --glass-shadow: rgba(0, 0, 0, 0.3);
+        --neon-blue: #00d4ff;
+        --neon-purple: #9d4edd;
+        --neon-cyan: #00ff88;
+        --dark-bg: #0a0a0f;
+        --dark-surface: #12121a;
+    }
+    
+    /* Fondo principal con degradado */
     .stApp {
-        background-color: #1a1a1a;
+        background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+        min-height: 100vh;
     }
     
     .main {
-        background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
-        font-family: 'Roboto', sans-serif;
-        color: #e0e0e0;
-    }
-    
-    /* Header principal - Estilo de la imagen */
-    .header-container {
-        background: linear-gradient(135deg, #2d2d2d 0%, #404040 100%);
-        padding: 1.5rem 2rem;
-        border-radius: 8px;
-        margin-bottom: 1.5rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-        border: 1px solid #555;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    /* Cards - Estilo oscuro gris */
-    .card {
-        background: linear-gradient(135deg, #2d2d2d 0%, #3d3d3d 100%);
-        padding: 1.5rem;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        margin-bottom: 1rem;
-        border: 1px solid #555;
-        transition: all 0.3s ease;
-    }
-    
-    .card:hover {
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-        border-color: #666;
-    }
-    
-    /* Sidebar - Estilo oscuro */
-    [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #2d2d2d 0%, #3d3d3d 100%);
-        padding: 1.5rem;
-        border-right: 1px solid #555;
-        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.3);
-    }
-    
-    [data-testid="stSidebar"] > div {
         background: transparent;
+        font-family: 'Inter', sans-serif;
+        color: #ffffff;
     }
     
-    /* Métricas en sidebar */
+    /* Header con Glassmorphism */
+    .header-container {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        padding: 2rem 2.5rem;
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    
+    /* Tarjetas Glassmorphism */
+    .card {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        margin-bottom: 1.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Sidebar Glassmorphism */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        padding: 2rem;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Métricas en sidebar con efecto neón */
     [data-testid="stSidebar"] [data-testid="stMetric"] {
-        background: linear-gradient(135deg, #3d3d3d 0%, #4d4d4d 100%);
-        border-radius: 8px;
-        padding: 1rem;
-        margin-bottom: 0.75rem;
-        border: 1px solid #666;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+        border: 1px solid rgba(0, 212, 255, 0.2);
+        box-shadow: 0 4px 16px rgba(0, 212, 255, 0.1);
     }
     
     [data-testid="stSidebar"] [data-testid="stMetric"] label {
-        color: #b0b0b0 !important;
-        font-weight: 500;
+        color: rgba(255, 255, 255, 0.7) !important;
+        font-weight: 600;
         font-size: 0.85rem;
     }
     
     [data-testid="stSidebar"] [data-testid="stMetric"] [data-testid="stMetricValue"] {
-        color: #4a90e2 !important;
+        color: #00d4ff !important;
         font-weight: 700;
-        font-size: 1.4rem;
+        font-size: 1.5rem;
     }
     
-    /* Títulos */
+    /* Títulos con degradado neón */
     h1 {
         color: #ffffff;
-        font-weight: 700;
-        letter-spacing: -0.5px;
+        font-weight: 800;
+        background: linear-gradient(135deg, #00d4ff 0%, #9d4edd 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
     
     h2 {
-        color: #4a90e2;
-        font-weight: 600;
-        letter-spacing: -0.3px;
+        color: #00d4ff;
+        font-weight: 700;
     }
     
     h3 {
-        color: #b0b0b0;
+        color: rgba(255, 255, 255, 0.9);
         font-weight: 600;
-        letter-spacing: -0.2px;
     }
     
-    /* Botones - Estilo azul profesional */
+    /* Botones con degradado neón */
     .stButton > button {
-        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        background: linear-gradient(135deg, #00d4ff 0%, #9d4edd 100%);
         color: white;
-        border: none;
-        border-radius: 6px;
-        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        padding: 0.875rem 2rem;
         font-weight: 600;
-        font-size: 0.9rem;
+        border: none;
+        box-shadow: 0 4px 16px rgba(0, 212, 255, 0.3);
         transition: all 0.3s ease;
-        box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
     }
     
     .stButton > button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
-        background: linear-gradient(135deg, #5aa0f2 0%, #4a90e2 100%);
+        box-shadow: 0 6px 24px rgba(0, 212, 255, 0.5);
     }
     
-    /* Tabs - Estilo oscuro */
+    /* Tabs con Glassmorphism */
     [data-testid="stTabs"] [role="tablist"] {
-        background: linear-gradient(135deg, #2d2d2d 0%, #3d3d3d 100%);
-        border-radius: 8px;
-        padding: 0.5rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        gap: 0.25rem;
-        border: 1px solid #555;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+        backdrop-filter: blur(15px);
+        border-radius: 16px;
+        padding: 0.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
     
     [data-testid="stTabs"] [role="tab"][aria-selected="true"] {
-        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        background: linear-gradient(135deg, #00d4ff 0%, #9d4edd 100%);
         color: white;
-        border-radius: 6px;
+        border-radius: 10px;
         font-weight: 600;
-        font-size: 0.9rem;
-        padding: 0.6rem 1rem;
-        box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
     }
     
     [data-testid="stTabs"] [role="tab"][aria-selected="false"] {
-        color: #b0b0b0;
-        font-weight: 500;
-        font-size: 0.85rem;
-        padding: 0.6rem 1rem;
-        transition: all 0.3s ease;
+        color: rgba(255, 255, 255, 0.6);
     }
     
-    [data-testid="stTabs"] [role="tab"][aria-selected="false"]:hover {
-        background: rgba(74, 144, 226, 0.15);
-        color: #ffffff;
-    }
-    
-    /* Info boxes */
-    .stAlert {
-        border-radius: 8px;
-        border: 1px solid #555;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        background: linear-gradient(135deg, #2d2d2d 0%, #3d3d3d 100%);
-    }
-    
-    /* Dataframes */
-    [data-testid="stDataFrame"] {
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        border: 1px solid #555;
-    }
-    
-    /* Inputs - Estilo oscuro */
+    /* Inputs con Glassmorphism */
     .stTextInput > div > div > input,
     .stNumberInput > div > div > input,
     .stSelectbox > div > div > select {
-        background: linear-gradient(135deg, #2d2d2d 0%, #3d3d3d 100%);
-        border-radius: 6px;
-        border: 2px solid #555;
-        color: #e0e0e0;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.15);
+        color: #ffffff;
+        border-radius: 12px;
         transition: all 0.3s ease;
-        font-family: 'Roboto', sans-serif;
     }
     
     .stTextInput > div > div > input:focus,
-    .stNumberInput > div > div > input:focus,
-    .stSelectbox > div > div > select:focus {
-        border-color: #4a90e2;
-        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
-        background: linear-gradient(135deg, #3d3d3d 0%, #4d4d4d 100%);
+    .stNumberInput > div > div > input:focus {
+        border-color: #00d4ff;
+        box-shadow: 0 0 16px rgba(0, 212, 255, 0.3);
     }
     
-    /* Metrics */
-    [data-testid="stMetric"] {
-        background: linear-gradient(135deg, #2d2d2d 0%, #3d3d3d 100%);
-        border-radius: 8px;
-        padding: 1.25rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        border: 1px solid #555;
-    }
-    
-    [data-testid="stMetric"] label {
-        color: #b0b0b0;
-        font-weight: 600;
-        font-size: 0.8rem;
-        text-transform: uppercase;
-    }
-    
-    [data-testid="stMetric"] [data-testid="stMetricValue"] {
-        color: #4a90e2;
-        font-weight: 700;
-        font-size: 1.7rem;
-    }
-    
-    /* File uploader */
+    /* File uploader con efecto neón */
     [data-testid="stFileUploader"] {
-        border-radius: 8px;
-        border: 2px dashed #4a90e2;
-        background: linear-gradient(135deg, #2d2d2d 0%, #3d3d3d 100%);
-        transition: all 0.3s ease;
-    }
-    
-    [data-testid="stFileUploader"]:hover {
-        border-color: #5aa0f2;
-        background: linear-gradient(135deg, #3d3d3d 0%, #4d4d4d 100%);
+        border: 2px dashed rgba(0, 212, 255, 0.5);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
     }
     
     /* Download button */
     .stDownloadButton > button {
-        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
-        border-radius: 6px;
+        background: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
+        color: white;
+        border-radius: 12px;
         font-weight: 600;
-        font-size: 0.9rem;
-        padding: 0.75rem 1.5rem;
-        box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
-        transition: all 0.3s ease;
+        box-shadow: 0 4px 16px rgba(0, 255, 136, 0.3);
     }
     
-    .stDownloadButton > button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
-        background: linear-gradient(135deg, #5aa0f2 0%, #4a90e2 100%);
-    }
-    
-    /* Scrollbar */
-    ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-    }
-    
-    ::-webkit-scrollbar-track {
-        background: #2d2d2d;
-        border-radius: 8px;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
-        border-radius: 8px;
-        border: 2px solid #2d2d2d;
-    }
-    
-    ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, #5aa0f2 0%, #4a90e2 100%);
-    }
-    
-    /* Text colors */
+    /* Texto general */
     p, span, div {
-        color: #e0e0e0;
+        color: rgba(255, 255, 255, 0.85);
     }
     
-    /* Label colors */
     label {
-        color: #b0b0b0;
+        color: rgba(255, 255, 255, 0.7);
         font-weight: 500;
-        font-size: 0.9rem;
     }
     
-    /* Divider */
-    hr {
-        border: none;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, #555, transparent);
-        margin: 1.5rem 0;
+    /* Métricas principales */
+    [data-testid="stMetric"] {
+        background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        padding: 1.5rem;
+        border: 1px solid rgba(0, 212, 255, 0.2);
+        box-shadow: 0 4px 16px rgba(0, 212, 255, 0.1);
+    }
+    
+    [data-testid="stMetric"] label {
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 600;
+    }
+    
+    [data-testid="stMetric"] [data-testid="stMetricValue"] {
+        color: #00d4ff;
+        font-weight: 700;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -306,6 +235,9 @@ st.markdown("""
 # =============================================
 def init_session_state():
     """Inicializa todas las variables de sesión necesarias"""
+    if 'theme_mode' not in st.session_state:
+        st.session_state.theme_mode = 'dark'
+    
     if 'services_by_measure' not in st.session_state:
         st.session_state.services_by_measure = pd.DataFrame([
             {
@@ -439,9 +371,12 @@ def create_pdf_with_crop_marks(image_pil, width_cm, height_cm, bleed_cm=0.5):
     img_with_bleed.save(img_bytes, format='PNG', dpi=(dpi, dpi))
     img_bytes.seek(0)
     
+    # Leer los bytes de la imagen
+    img_data = img_bytes.read()
+    
     # Insertar imagen en el PDF
     rect = fitz.Rect(0, 0, width_pt, height_pt)
-    page.insert_image(rect, stream=img_bytes.read())
+    page.insert_image(rect, stream=img_data)
     
     # Dibujar marcas de corte (esquinas)
     mark_length_pt = 10  # Longitud de la marca de corte en puntos
@@ -515,7 +450,14 @@ def create_pdf_with_crop_marks(image_pil, width_cm, height_cm, bleed_cm=0.5):
     doc.save(pdf_bytes)
     pdf_bytes.seek(0)
     
-    return pdf_bytes
+    # Leer los bytes para retorno
+    pdf_data = pdf_bytes.getvalue()
+    
+    # Crear nuevo BytesIO con los datos
+    result = io.BytesIO(pdf_data)
+    result.seek(0)
+    
+    return result
 
 def generate_receipt_pdf(client_name, items, subtotal, iva, total):
     """
@@ -616,31 +558,282 @@ def generate_receipt_pdf(client_name, items, subtotal, iva, total):
 # INTERFAZ PRINCIPAL
 # =============================================
 def main():
-    # Header principal
+    # Header principal con Glassmorphism y efectos neón
     st.markdown("""
     <div class="header-container">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div style="display: flex; align-items: center; gap: 1rem;">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#4a90e2" stroke-width="2">
-                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                    <path d="M2 17l10 5 10-5"/>
-                    <path d="M2 12l10 5 10-5"/>
-                </svg>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <div style="background: linear-gradient(135deg, #00d4ff 0%, #9d4edd 100%); 
+                            padding: 0.75rem; 
+                            border-radius: 16px; 
+                            box-shadow: 0 4px 16px rgba(0, 212, 255, 0.3);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
                 <div>
-                    <h1 style="color: #ffffff; margin: 0; font-size: 1.75rem; font-weight: 700;">VISION PUBLICIDAD</h1>
-                    <p style="color: #b0b0b0; margin: 0.25rem 0 0; font-size: 0.85rem;">Sistema de Gestión Operativa</p>
+                    <h1 style="margin: 0; font-size: 1.85rem; font-weight: 800; 
+                               background: linear-gradient(135deg, #00d4ff 0%, #9d4edd 100%);
+                               -webkit-background-clip: text;
+                               -webkit-text-fill-color: transparent;
+                               background-clip: text;
+                               letter-spacing: -0.5px;">VISION PUBLICIDAD</h1>
+                    <p style="margin: 0.35rem 0 0; font-size: 0.9rem; 
+                               color: rgba(255, 255, 255, 0.7); 
+                               font-weight: 500;">Sistema de Gestión Operativa</p>
                 </div>
             </div>
-            <div style="background: #4a90e2; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; color: white;">
-                Administrador
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div style="background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(157, 78, 221, 0.2) 100%);
+                            backdrop-filter: blur(10px);
+                            padding: 0.6rem 1.25rem; 
+                            border-radius: 12px; 
+                            font-size: 0.85rem; 
+                            font-weight: 600; 
+                            color: #00d4ff;
+                            border: 1px solid rgba(0, 212, 255, 0.3);
+                            box-shadow: 0 4px 12px rgba(0, 212, 255, 0.2);">
+                    <span style="display: flex; align-items: center; gap: 0.5rem;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        Administrador
+                    </span>
+                </div>
             </div>
         </div>
     </div>
     """, unsafe_allow_html=True)
     
-    # Sidebar con información
+    # Botón de cambio de tema con estilo neón
+    col_theme = st.columns([1])
+    with col_theme[0]:
+        st.markdown("""
+        <div style="margin-bottom: 1.5rem;">
+        """, unsafe_allow_html=True)
+        if st.button("⋮ Cambiar Tema (Dark/Light)", key="header_theme_toggle", use_container_width=True):
+            st.session_state.theme_mode = 'light' if st.session_state.theme_mode == 'dark' else 'dark'
+            st.rerun()
+        st.markdown("""
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # Sidebar con información y métricas modernas
     with st.sidebar:
-        st.markdown("### Panel de Control")
+        st.markdown("""
+        <div style="margin-bottom: 2rem;">
+            <h2 style="margin: 0; font-size: 1.5rem; font-weight: 700; 
+                       background: linear-gradient(135deg, #00d4ff 0%, #9d4edd 100%);
+                       -webkit-background-clip: text;
+                       -webkit-text-fill-color: transparent;
+                       background-clip: text;">Panel de Control</h2>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Mostrar tema actual con estilo
+        current_theme_display = st.session_state.theme_mode.capitalize()
+        st.markdown(f"""
+        <div style="background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(157, 78, 221, 0.15) 100%);
+                    backdrop-filter: blur(10px);
+                    padding: 1rem;
+                    border-radius: 12px;
+                    border: 1px solid rgba(0, 212, 255, 0.3);
+                    margin-bottom: 1.5rem;">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2.5">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                </svg>
+                <span style="color: rgba(255, 255, 255, 0.85); font-weight: 600; font-size: 0.9rem;">
+                    Tema actual: {current_theme_display}
+                </span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Selector de modo (Dark/Light) - sincronizado con el botón del header
+        theme_mode = st.selectbox(
+            "Modo de Tema", 
+            ["Dark", "Light"], 
+            key="sidebar_theme_mode",
+            index=0 if st.session_state.theme_mode == 'dark' else 1
+        )
+        
+        # Actualizar session_state cuando cambia el tema desde el sidebar
+        if theme_mode.lower() != st.session_state.theme_mode:
+            st.session_state.theme_mode = theme_mode.lower()
+            st.rerun()
+        
+        # Aplicar CSS según el tema (Glassmorphism para ambos temas)
+        if st.session_state.theme_mode == "dark":
+            # El CSS Glassmorphism ya está aplicado globalmente
+            pass
+        else:  # Light theme con Glassmorphism
+            st.markdown("""
+            <style>
+                /* Light Theme con Glassmorphism */
+                .stApp {
+                    background: linear-gradient(135deg, #f0f4f8 0%, #e8ecf0 50%, #dfe4e8 100%);
+                }
+                .main {
+                    background: transparent;
+                    font-family: 'Inter', sans-serif;
+                    color: #333333;
+                }
+                .header-container {
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+                    backdrop-filter: blur(20px);
+                    -webkit-backdrop-filter: blur(20px);
+                    padding: 2rem 2.5rem;
+                    border-radius: 20px;
+                    margin-bottom: 2rem;
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+                    border: 1px solid rgba(255, 255, 255, 0.5);
+                }
+                .card {
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+                    backdrop-filter: blur(15px);
+                    -webkit-backdrop-filter: blur(15px);
+                    padding: 2rem;
+                    border-radius: 20px;
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+                    margin-bottom: 1.5rem;
+                    border: 1px solid rgba(255, 255, 255, 0.5);
+                }
+                [data-testid="stSidebar"] {
+                    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+                    backdrop-filter: blur(20px);
+                    -webkit-backdrop-filter: blur(20px);
+                    padding: 2rem;
+                    border-right: 1px solid rgba(255, 255, 255, 0.5);
+                }
+                [data-testid="stSidebar"] [data-testid="stMetric"] {
+                    background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(157, 78, 221, 0.15) 100%);
+                    backdrop-filter: blur(10px);
+                    border-radius: 16px;
+                    padding: 1.25rem;
+                    margin-bottom: 1rem;
+                    border: 1px solid rgba(0, 212, 255, 0.3);
+                    box-shadow: 0 4px 16px rgba(0, 212, 255, 0.15);
+                }
+                [data-testid="stSidebar"] [data-testid="stMetric"] label {
+                    color: #666666 !important;
+                    font-weight: 600;
+                    font-size: 0.85rem;
+                }
+                [data-testid="stSidebar"] [data-testid="stMetric"] [data-testid="stMetricValue"] {
+                    color: #0066cc !important;
+                    font-weight: 700;
+                    font-size: 1.5rem;
+                }
+                h1 {
+                    color: #333333;
+                    font-weight: 800;
+                    background: linear-gradient(135deg, #0066cc 0%, #9d4edd 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                }
+                h2 {
+                    color: #0066cc;
+                    font-weight: 700;
+                }
+                h3 {
+                    color: #333333;
+                    font-weight: 600;
+                }
+                .stButton > button {
+                    background: linear-gradient(135deg, #0066cc 0%, #9d4edd 100%);
+                    color: white;
+                    border-radius: 12px;
+                    padding: 0.875rem 2rem;
+                    font-weight: 600;
+                    border: none;
+                    box-shadow: 0 4px 16px rgba(0, 102, 204, 0.3);
+                    transition: all 0.3s ease;
+                }
+                .stButton > button:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 24px rgba(0, 102, 204, 0.5);
+                }
+                [data-testid="stTabs"] [role="tablist"] {
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+                    backdrop-filter: blur(15px);
+                    border-radius: 16px;
+                    padding: 0.75rem;
+                    border: 1px solid rgba(255, 255, 255, 0.5);
+                }
+                [data-testid="stTabs"] [role="tab"][aria-selected="true"] {
+                    background: linear-gradient(135deg, #0066cc 0%, #9d4edd 100%);
+                    color: white;
+                    border-radius: 10px;
+                    font-weight: 600;
+                }
+                [data-testid="stTabs"] [role="tab"][aria-selected="false"] {
+                    color: #666666;
+                }
+                [data-testid="stMetric"] {
+                    background: linear-gradient(135deg, rgba(0, 102, 204, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%);
+                    backdrop-filter: blur(10px);
+                    border-radius: 16px;
+                    padding: 1.5rem;
+                    border: 1px solid rgba(0, 102, 204, 0.2);
+                    box-shadow: 0 4px 16px rgba(0, 102, 204, 0.1);
+                }
+                [data-testid="stMetric"] label {
+                    color: #666666;
+                    font-weight: 600;
+                }
+                [data-testid="stMetric"] [data-testid="stMetricValue"] {
+                    color: #0066cc;
+                    font-weight: 700;
+                }
+                .stTextInput > div > div > input,
+                .stNumberInput > div > div > input,
+                .stSelectbox > div > div > select {
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+                    backdrop-filter: blur(10px);
+                    border: 2px solid rgba(0, 102, 204, 0.3);
+                    color: #333333;
+                    border-radius: 12px;
+                    transition: all 0.3s ease;
+                }
+                .stTextInput > div > div > input:focus,
+                .stNumberInput > div > div > input:focus {
+                    border-color: #0066cc;
+                    box-shadow: 0 0 16px rgba(0, 102, 204, 0.3);
+                }
+                [data-testid="stFileUploader"] {
+                    border: 2px dashed rgba(0, 102, 204, 0.5);
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+                    backdrop-filter: blur(10px);
+                    border-radius: 16px;
+                }
+                .stDownloadButton > button {
+                    background: linear-gradient(135deg, #00cc66 0%, #0066cc 100%);
+                    color: white;
+                    border-radius: 12px;
+                    font-weight: 600;
+                    box-shadow: 0 4px 16px rgba(0, 204, 102, 0.3);
+                }
+                p, span, div {
+                    color: #333333;
+                }
+                label {
+                    color: #666666;
+                    font-weight: 500;
+                }
+            </style>
+            """, unsafe_allow_html=True)
+        
         st.markdown("---")
         
         # Métricas principales
@@ -681,31 +874,38 @@ def main():
     # =============================================
     with tab1:
         st.markdown("""
-        <div style="margin-bottom: 1.5rem;">
-            <h2 style="color: #4a90e2; font-size: 1.75rem; font-weight: 700; margin: 0 0 0.5rem 0; letter-spacing: -0.5px;">Cotizador Gran Formato y Preprensa</h2>
-            <p style="color: #b0b0b0; margin: 0; font-size: 0.95rem;">Cotice y genere archivos PDF listos para impresión con marcas de corte vectoriales.</p>
+        <div style="margin-bottom: 2rem;">
+            <h2 style="font-size: 1.85rem; font-weight: 700; margin: 0 0 0.5rem 0; letter-spacing: -0.5px;
+                       background: linear-gradient(135deg, #00d4ff 0%, #9d4edd 100%);
+                       -webkit-background-clip: text;
+                       -webkit-text-fill-color: transparent;
+                       background-clip: text;">Cotizador Gran Formato y Preprensa</h2>
+            <p style="color: rgba(255, 255, 255, 0.7); margin: 0; font-size: 0.95rem; font-weight: 500;">
+                Cotice y genere archivos PDF listos para impresión con marcas de corte vectoriales.
+            </p>
         </div>
         """, unsafe_allow_html=True)
         
         col1, col2 = st.columns([1, 1])
         
         with col1:
-            # Sección 1: Cotización y Medidas
+            # Sección 1: Cotización y Medidas con Glassmorphism
             st.markdown("""
-            <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
-                       backdrop-filter: blur(10px);
-                       border-radius: 16px;
-                       padding: 1.5rem;
-                       border: 1px solid rgba(255, 255, 255, 0.08);
-                       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-                       margin-bottom: 1.5rem;">
+            <div class="card">
                 <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4a90e2" stroke-width="2">
-                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                        <path d="M2 17l10 5 10-5"/>
-                        <path d="M2 12l10 5 10-5"/>
-                    </svg>
-                    <h3 style="color: #f1f5f9; margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.25px;">1. Cotización y Medidas</h3>
+                    <div style="background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(157, 78, 221, 0.2) 100%);
+                                padding: 0.6rem;
+                                border-radius: 10px;
+                                border: 1px solid rgba(0, 212, 255, 0.3);">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2.5">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h3 style="color: rgba(255, 255, 255, 0.95); margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.25px;">
+                        1. Cotización y Medidas
+                    </h3>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -735,55 +935,70 @@ def main():
                 service_data['factor']
             )
             
-            # Indicadores de costo - estilo destacado
+            # Indicadores de costo - estilo Glassmorphism con degradado neón
             st.markdown("""
-            <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
-                       backdrop-filter: blur(10px);
-                       border-radius: 16px;
-                       padding: 1.5rem;
-                       border: 1px solid rgba(255, 255, 255, 0.08);
-                       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-                       margin-bottom: 1.5rem;">
+            <div class="card">
                 <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4a90e2" stroke-width="2">
-                        <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                    </svg>
-                    <h3 style="color: #f1f5f9; margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.25px;">Resumen de Costos</h3>
+                    <div style="background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(157, 78, 221, 0.2) 100%);
+                                padding: 0.6rem;
+                                border-radius: 10px;
+                                border: 1px solid rgba(0, 212, 255, 0.3);">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2.5">
+                            <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                    </div>
+                    <h3 style="color: rgba(255, 255, 255, 0.95); margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.25px;">
+                        Resumen de Costos
+                    </h3>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                    <div style="background: rgba(59, 130, 246, 0.1); padding: 1rem; border-radius: 10px; border: 1px solid rgba(59, 130, 246, 0.2);">
-                        <div style="color: #94a3b8; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">Costo por Fórmula</div>
-                        <div style="color: #60a5fa; font-size: 1.5rem; font-weight: 700;">""" + format_currency(unit_price) + """</div>
+                    <div style="background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(157, 78, 221, 0.15) 100%);
+                                backdrop-filter: blur(10px);
+                                padding: 1rem; 
+                                border-radius: 12px; 
+                                border: 1px solid rgba(0, 212, 255, 0.3);
+                                box-shadow: 0 4px 12px rgba(0, 212, 255, 0.1);">
+                        <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">Costo por Fórmula</div>
+                        <div style="color: #00d4ff; font-size: 1.5rem; font-weight: 700;">""" + format_currency(unit_price) + """</div>
                     </div>
-                    <div style="background: rgba(59, 130, 246, 0.1); padding: 1rem; border-radius: 10px; border: 1px solid rgba(59, 130, 246, 0.2);">
-                        <div style="color: #94a3b8; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">Tarifa Mínima Aplicable</div>
-                        <div style="color: #60a5fa; font-size: 1.5rem; font-weight: 700;">""" + format_currency(service_data['tarifa_minima']) + """</div>
+                    <div style="background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(157, 78, 221, 0.15) 100%);
+                                backdrop-filter: blur(10px);
+                                padding: 1rem; 
+                                border-radius: 12px; 
+                                border: 1px solid rgba(0, 212, 255, 0.3);
+                                box-shadow: 0 4px 12px rgba(0, 212, 255, 0.1);">
+                        <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">Tarifa Mínima Aplicable</div>
+                        <div style="color: #00d4ff; font-size: 1.5rem; font-weight: 700;">""" + format_currency(service_data['tarifa_minima']) + """</div>
                     </div>
                 </div>
-                <div style="background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%); padding: 1.25rem; border-radius: 12px; box-shadow: 0 4px 16px rgba(74, 144, 226, 0.4);">
-                    <div style="color: rgba(255, 255, 255, 0.9); font-size: 0.9rem; font-weight: 500; margin-bottom: 0.5rem;">TOTAL A COBRAR</div>
-                    <div style="color: white; font-size: 2rem; font-weight: 800; letter-spacing: -0.5px;">""" + format_currency(total_price) + """</div>
+                <div style="background: linear-gradient(135deg, #00d4ff 0%, #9d4edd 100%); 
+                           padding: 1.5rem; 
+                           border-radius: 16px; 
+                           box-shadow: 0 8px 24px rgba(0, 212, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);">
+                    <div style="color: rgba(255, 255, 255, 0.9); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; letter-spacing: 0.5px;">TOTAL A COBRAR</div>
+                    <div style="color: white; font-size: 2.25rem; font-weight: 800; letter-spacing: -1px;">""" + format_currency(total_price) + """</div>
                 </div>
             </div>
             """, unsafe_allow_html=True)
         
         with col2:
-            # Sección 2: Preprensa Digital y Archivos
+            # Sección 2: Preprensa Digital y Archivos con Glassmorphism
             st.markdown("""
-            <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
-                       backdrop-filter: blur(10px);
-                       border-radius: 16px;
-                       padding: 1.5rem;
-                       border: 1px solid rgba(255, 255, 255, 0.08);
-                       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-                       margin-bottom: 1.5rem;">
+            <div class="card">
                 <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4a90e2" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                        <polyline points="17 8 12 3 7 8"/>
-                        <line x1="12" y1="3" x2="12" y2="15"/>
-                    </svg>
-                    <h3 style="color: #f1f5f9; margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.25px;">2. Preprensa Digital y Archivos</h3>
+                    <div style="background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(157, 78, 221, 0.2) 100%);
+                                padding: 0.6rem;
+                                border-radius: 10px;
+                                border: 1px solid rgba(0, 212, 255, 0.3);">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2.5">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                    </div>
+                    <h3 style="color: rgba(255, 255, 255, 0.95); margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.25px;">
+                        2. Preprensa Digital y Archivos
+                    </h3>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -809,14 +1024,20 @@ def main():
                     if st.button("Generar PDF FPP con Marcas de Corte", key="gf_generate"):
                         with st.spinner("Procesando imagen y generando PDF..."):
                             try:
+                                st.info("Redimensionando imagen...")
                                 # Redimensionar imagen
                                 resized_image = resize_image_to_cm(image_pil, width_cm, height_cm, dpi=150)
                                 
+                                st.info("Creando PDF con marcas de corte...")
                                 # Crear PDF con marcas de corte
                                 pdf_bytes = create_pdf_with_crop_marks(resized_image, width_cm, height_cm, bleed_cm=0.5)
                                 
+                                st.info("Preparando descarga...")
                                 # Leer los bytes del PDF
+                                pdf_bytes.seek(0)
                                 pdf_data = pdf_bytes.read()
+                                
+                                st.info(f"Tamaño del PDF: {len(pdf_data)} bytes")
                                 
                                 # Nombre del archivo
                                 pdf_filename = f"FPP_{selected_service}_{client_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf"
@@ -847,16 +1068,19 @@ def main():
                                     label="Descargar FPP para Plotter",
                                     data=pdf_data,
                                     file_name=pdf_filename,
-                                    mime="application/pdf"
+                                    mime="application/pdf",
+                                    key="download_pdf_fpp"
                                 )
                                 
                             except Exception as e:
+                                import traceback
                                 st.error(f"Error al generar PDF: {str(e)}")
+                                st.error(f"Detalles: {traceback.format_exc()}")
                 
                 except Exception as e:
                     st.error(f"Error al procesar la imagen: {str(e)}")
             else:
-                st.warning("⚠️ Por favor cargue una imagen para generar el PDF.")
+                st.warning("Por favor cargue una imagen para generar el PDF.")
     
     # =============================================
     # PESTAÑA 2: PRODUCTOS FIJOS Y PAPELERÍA
@@ -864,7 +1088,7 @@ def main():
     with tab2:
         st.markdown("""
         <div class="card">
-            <h2>📦 Productos Fijos y Papelería</h2>
+            <h2>Productos Fijos y Papelería</h2>
             <p>Venta de productos de papelería, avisos fijos y artículos promocionales.</p>
         </div>
         """, unsafe_allow_html=True)
@@ -874,7 +1098,7 @@ def main():
         with col1:
             st.markdown("""
             <div class="card">
-                <h3>🛒 Selección de Producto</h3>
+                <h3>Selección de Producto</h3>
             </div>
             """, unsafe_allow_html=True)
             
@@ -891,14 +1115,14 @@ def main():
             # Verificar stock disponible
             available_stock = product_data['stock']
             if quantity_fp > available_stock:
-                st.warning(f"⚠️ Solo hay {available_stock} unidades disponibles.")
+                st.warning(f"Solo hay {available_stock} unidades disponibles.")
             
             # Cálculo del total
             total_fp = product_data['precio'] * quantity_fp
             
             st.markdown("""
             <div class="card">
-                <h3>💰 Resumen de Compra</h3>
+                <h3>Resumen de Compra</h3>
             </div>
             """, unsafe_allow_html=True)
             st.metric("Precio Unitario", format_currency(product_data['precio']))
@@ -907,7 +1131,7 @@ def main():
             
             client_name_fp = st.text_input("Nombre del Cliente", key="fp_client")
             
-            if st.button("🛍️ Vender y Descontar", key="fp_sell"):
+            if st.button("Vender y Descontar", key="fp_sell"):
                 if quantity_fp <= available_stock:
                     # Actualizar inventario
                     idx = st.session_state.fixed_products[
@@ -930,15 +1154,15 @@ def main():
                         st.session_state.sales_history, new_sale
                     ], ignore_index=True)
                     
-                    st.success(f"✅ Venta registrada! {quantity_fp} unidades descontadas del inventario.")
+                    st.success(f"Venta registrada! {quantity_fp} unidades descontadas del inventario.")
                     st.rerun()
                 else:
-                    st.error("❌ Stock insuficiente para completar la venta.")
+                    st.error("Stock insuficiente para completar la venta.")
         
         with col2:
             st.markdown("""
             <div class="card">
-                <h3>📋 Catálogo de Productos</h3>
+                <h3>Catálogo de Productos</h3>
             </div>
             """, unsafe_allow_html=True)
             st.dataframe(
@@ -982,15 +1206,15 @@ def main():
                 key="edit_services"
             )
             
-            if st.button("💾 Guardar Cambios en Servicios", key="save_services"):
+            if st.button("Guardar Cambios en Servicios", key="save_services"):
                 st.session_state.services_by_measure = edited_services
-                st.success("✅ Cambios guardados exitosamente!")
+                st.success("Cambios guardados exitosamente!")
                 st.rerun()
         
         with subtab2:
             st.markdown("""
             <div class="card">
-                <h3>📦 Productos Fijos y Papelería</h3>
+                <h3>Productos Fijos y Papelería</h3>
             </div>
             """, unsafe_allow_html=True)
             
