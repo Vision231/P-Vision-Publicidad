@@ -15,7 +15,7 @@ import os
 # Configuración de la página
 st.set_page_config(
     page_title="Visión Publicidad - Sistema de Gestión",
-    page_icon="🖼️",
+    page_icon="�",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -431,8 +431,21 @@ def resize_image_to_cm(image_pil, width_cm, height_cm, dpi=150):
 
 def create_pdf_with_crop_marks(image_pil, width_cm, height_cm, bleed_cm=0.5):
     """
-    Crea un PDF con la imagen, sangría (bleed) y marcas de corte vectoriales.
+    Crea un PDF con la imagen, sangría (bleed) y marcas de corte vectoriales usando ReportLab.
     """
+    from reportlab.lib.units import cm, inch
+    from reportlab.pdfgen import canvas
+    from reportlab.lib import colors
+    
+    # Convertir imagen RGBA a RGB si es necesario
+    if image_pil.mode == 'RGBA':
+        # Crear fondo blanco y pegar la imagen
+        rgb_image = Image.new('RGB', image_pil.size, (255, 255, 255))
+        rgb_image.paste(image_pil, mask=image_pil.split()[3])  # Usar el canal alpha como máscara
+        image_pil = rgb_image
+    elif image_pil.mode != 'RGB':
+        image_pil = image_pil.convert('RGB')
+    
     # Calcular dimensiones en puntos (1 punto = 1/72 pulgada)
     dpi = 150
     width_px = int((width_cm * dpi) / 2.54)
@@ -443,33 +456,33 @@ def create_pdf_with_crop_marks(image_pil, width_cm, height_cm, bleed_cm=0.5):
     total_width_px = width_px + (2 * bleed_px)
     total_height_px = height_px + (2 * bleed_px)
     
-    # Convertir a puntos para PyMuPDF
+    # Convertir a puntos para ReportLab
     width_pt = total_width_px * 72 / dpi
     height_pt = total_height_px * 72 / dpi
     
-    # Crear documento PDF
-    doc = fitz.open()
-    page = doc.new_page(width=width_pt, height=height_pt)
-    
     # Crear imagen con fondo blanco y sangría
-    img_with_bleed = Image.new('RGB', (total_width_px, total_height_px), 'white')
+    img_with_bleed = Image.new('RGB', (total_width_px, total_height_px), (255, 255, 255))
     
     # Pegar la imagen original en el centro (con sangría)
     paste_x = bleed_px
     paste_y = bleed_px
     img_with_bleed.paste(image_pil, (paste_x, paste_y))
     
-    # Convertir a bytes para insertar en PDF
-    img_bytes = io.BytesIO()
-    img_with_bleed.save(img_bytes, format='PNG', dpi=(dpi, dpi))
-    img_bytes.seek(0)
+    # Crear buffer para el PDF
+    pdf_buffer = io.BytesIO()
     
-    # Leer los bytes de la imagen
-    img_data = img_bytes.read()
+    # Crear canvas con las dimensiones calculadas
+    c = canvas.Canvas(pdf_buffer, pagesize=(width_pt, height_pt))
     
-    # Insertar imagen en el PDF
-    rect = fitz.Rect(0, 0, width_pt, height_pt)
-    page.insert_image(rect, stream=img_data)
+    # Guardar imagen temporalmente para insertarla en el PDF
+    img_temp = io.BytesIO()
+    img_with_bleed.save(img_temp, format='PNG')
+    img_temp.seek(0)
+    
+    # Insertar imagen en el PDF usando drawImage con el archivo temporal
+    from reportlab.lib.utils import ImageReader
+    img_reader = ImageReader(img_temp)
+    c.drawImage(img_reader, 0, 0, width_pt, height_pt)
     
     # Dibujar marcas de corte (esquinas)
     mark_length_pt = 10  # Longitud de la marca de corte en puntos
@@ -481,70 +494,32 @@ def create_pdf_with_crop_marks(image_pil, width_cm, height_cm, bleed_cm=0.5):
     crop_x2 = width_pt - crop_x1
     crop_y2 = height_pt - crop_y1
     
+    # Configurar color y grosor de las líneas
+    c.setStrokeColor(colors.black)
+    c.setLineWidth(line_width)
+    
     # Dibujar marcas en las 4 esquinas
     # Esquina superior izquierda
-    page.draw_line(
-        fitz.Point(crop_x1 - mark_length_pt, crop_y1),
-        fitz.Point(crop_x1 + mark_length_pt, crop_y1),
-        color=(0, 0, 0),
-        width=line_width
-    )
-    page.draw_line(
-        fitz.Point(crop_x1, crop_y1 - mark_length_pt),
-        fitz.Point(crop_x1, crop_y1 + mark_length_pt),
-        color=(0, 0, 0),
-        width=line_width
-    )
+    c.line(crop_x1 - mark_length_pt, crop_y1, crop_x1 + mark_length_pt, crop_y1)
+    c.line(crop_x1, crop_y1 - mark_length_pt, crop_x1, crop_y1 + mark_length_pt)
     
     # Esquina superior derecha
-    page.draw_line(
-        fitz.Point(crop_x2 - mark_length_pt, crop_y1),
-        fitz.Point(crop_x2 + mark_length_pt, crop_y1),
-        color=(0, 0, 0),
-        width=line_width
-    )
-    page.draw_line(
-        fitz.Point(crop_x2, crop_y1 - mark_length_pt),
-        fitz.Point(crop_x2, crop_y1 + mark_length_pt),
-        color=(0, 0, 0),
-        width=line_width
-    )
+    c.line(crop_x2 - mark_length_pt, crop_y1, crop_x2 + mark_length_pt, crop_y1)
+    c.line(crop_x2, crop_y1 - mark_length_pt, crop_x2, crop_y1 + mark_length_pt)
     
     # Esquina inferior izquierda
-    page.draw_line(
-        fitz.Point(crop_x1 - mark_length_pt, crop_y2),
-        fitz.Point(crop_x1 + mark_length_pt, crop_y2),
-        color=(0, 0, 0),
-        width=line_width
-    )
-    page.draw_line(
-        fitz.Point(crop_x1, crop_y2 - mark_length_pt),
-        fitz.Point(crop_x1, crop_y2 + mark_length_pt),
-        color=(0, 0, 0),
-        width=line_width
-    )
+    c.line(crop_x1 - mark_length_pt, crop_y2, crop_x1 + mark_length_pt, crop_y2)
+    c.line(crop_x1, crop_y2 - mark_length_pt, crop_x1, crop_y2 + mark_length_pt)
     
     # Esquina inferior derecha
-    page.draw_line(
-        fitz.Point(crop_x2 - mark_length_pt, crop_y2),
-        fitz.Point(crop_x2 + mark_length_pt, crop_y2),
-        color=(0, 0, 0),
-        width=line_width
-    )
-    page.draw_line(
-        fitz.Point(crop_x2, crop_y2 - mark_length_pt),
-        fitz.Point(crop_x2, crop_y2 + mark_length_pt),
-        color=(0, 0, 0),
-        width=line_width
-    )
+    c.line(crop_x2 - mark_length_pt, crop_y2, crop_x2 + mark_length_pt, crop_y2)
+    c.line(crop_x2, crop_y2 - mark_length_pt, crop_x2, crop_y2 + mark_length_pt)
     
-    # Guardar PDF en memoria
-    pdf_bytes = io.BytesIO()
-    doc.save(pdf_bytes)
-    doc.close()
-    pdf_bytes.seek(0)
+    # Guardar el PDF
+    c.save()
+    pdf_buffer.seek(0)
     
-    return pdf_bytes
+    return pdf_buffer
 
 def generate_receipt_pdf(client_name, items, subtotal, iva, total):
     """
@@ -653,6 +628,14 @@ def main():
             [data-testid="stAppViewBlockContainer"] {
                 background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
                 min-height: 100vh;
+            }
+            /* Ocultar header predeterminado de Streamlit */
+            [data-testid="stHeader"] {
+                background: transparent !important;
+                padding: 0 !important;
+            }
+            [data-testid="stHeader"] > div {
+                display: none !important;
             }
             [data-testid="stSidebar"] {
                 background: linear-gradient(135deg, rgba(10, 10, 15, 0.95) 0%, rgba(26, 26, 46, 0.95) 100%);
@@ -888,6 +871,14 @@ def main():
                 background: transparent;
                 font-family: 'Inter', sans-serif;
                 color: #333333;
+            }
+            /* Ocultar header predeterminado de Streamlit en modo light */
+            [data-testid="stHeader"] {
+                background: transparent !important;
+                padding: 0 !important;
+            }
+            [data-testid="stHeader"] > div {
+                display: none !important;
             }
             .header-container {
                 background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
