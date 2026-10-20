@@ -108,7 +108,7 @@ st.markdown("""
     
     /* Títulos con degradado neón */
     h1 {
-        color: #ffffff;
+        color: rgba(255, 255, 255, 0.95);
         font-weight: 800;
         background: linear-gradient(135deg, #00d4ff 0%, #9d4edd 100%);
         -webkit-background-clip: text;
@@ -117,12 +117,12 @@ st.markdown("""
     }
     
     h2 {
-        color: #00d4ff;
+        color: rgba(255, 255, 255, 0.9);
         font-weight: 700;
     }
     
     h3 {
-        color: rgba(255, 255, 255, 0.9);
+        color: rgba(255, 255, 255, 0.85);
         font-weight: 600;
     }
     
@@ -203,9 +203,47 @@ st.markdown("""
         color: rgba(255, 255, 255, 0.85);
     }
     
+    p, span {
+        color: rgba(255, 255, 255, 0.85);
+    }
+    
     label {
         color: rgba(255, 255, 255, 0.7);
         font-weight: 500;
+    }
+    
+    /* Eliminar fondos blancos de elementos Streamlit */
+    .stMarkdown, .stText, .stWrite {
+        background: transparent !important;
+    }
+    
+    /* Ajustar colores de información */
+    .stAlert {
+        background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(157, 78, 221, 0.15) 100%) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 212, 255, 0.3);
+        border-radius: 12px;
+    }
+    
+    .stSuccess {
+        background: linear-gradient(135deg, rgba(0, 255, 136, 0.15) 0%, rgba(0, 212, 255, 0.15) 100%) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 255, 136, 0.3);
+        border-radius: 12px;
+    }
+    
+    .stWarning {
+        background: linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(255, 152, 0, 0.15) 100%) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 193, 7, 0.3);
+        border-radius: 12px;
+    }
+    
+    .stError {
+        background: linear-gradient(135deg, rgba(244, 67, 54, 0.15) 0%, rgba(233, 30, 99, 0.15) 100%) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(244, 67, 54, 0.3);
+        border-radius: 12px;
     }
     
     /* Métricas principales */
@@ -659,6 +697,9 @@ def main():
         </div>
         """, unsafe_allow_html=True)
         
+        # Ocultar el st.info predeterminado ya que usamos el personalizado
+        # No usar st.info() para evitar el fondo blanco
+        
         # Selector de modo (Dark/Light) - sincronizado con el botón del header
         theme_mode = st.selectbox(
             "Modo de Tema", 
@@ -735,7 +776,7 @@ def main():
                     font-size: 1.5rem;
                 }
                 h1 {
-                    color: #333333;
+                    color: rgba(51, 51, 51, 0.95);
                     font-weight: 800;
                     background: linear-gradient(135deg, #0066cc 0%, #9d4edd 100%);
                     -webkit-background-clip: text;
@@ -743,11 +784,11 @@ def main():
                     background-clip: text;
                 }
                 h2 {
-                    color: #0066cc;
+                    color: rgba(51, 51, 51, 0.9);
                     font-weight: 700;
                 }
                 h3 {
-                    color: #333333;
+                    color: rgba(51, 51, 51, 0.85);
                     font-weight: 600;
                 }
                 .stButton > button {
@@ -827,9 +868,48 @@ def main():
                 p, span, div {
                     color: #333333;
                 }
+                
+                p, span {
+                    color: #333333;
+                }
+                
                 label {
                     color: #666666;
                     font-weight: 500;
+                }
+                
+                /* Eliminar fondos blancos de elementos Streamlit en modo light */
+                .stMarkdown, .stText, .stWrite {
+                    background: transparent !important;
+                }
+                
+                /* Ajustar colores de información en modo light */
+                .stAlert {
+                    background: linear-gradient(135deg, rgba(0, 102, 204, 0.15) 0%, rgba(157, 78, 221, 0.15) 100%) !important;
+                    backdrop-filter: blur(10px);
+                    border: 1px solid rgba(0, 102, 204, 0.3);
+                    border-radius: 12px;
+                }
+                
+                .stSuccess {
+                    background: linear-gradient(135deg, rgba(0, 204, 102, 0.15) 0%, rgba(0, 102, 204, 0.15) 100%) !important;
+                    backdrop-filter: blur(10px);
+                    border: 1px solid rgba(0, 204, 102, 0.3);
+                    border-radius: 12px;
+                }
+                
+                .stWarning {
+                    background: linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(255, 152, 0, 0.15) 100%) !important;
+                    backdrop-filter: blur(10px);
+                    border: 1px solid rgba(255, 193, 7, 0.3);
+                    border-radius: 12px;
+                }
+                
+                .stError {
+                    background: linear-gradient(135deg, rgba(244, 67, 54, 0.15) 0%, rgba(233, 30, 99, 0.15) 100%) !important;
+                    backdrop-filter: blur(10px);
+                    border: 1px solid rgba(244, 67, 54, 0.3);
+                    border-radius: 12px;
                 }
             </style>
             """, unsafe_allow_html=True)
