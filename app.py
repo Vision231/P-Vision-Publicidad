@@ -15,7 +15,7 @@ import os
 # Configuración de la página
 st.set_page_config(
     page_title="Visión Publicidad - Sistema de Gestión",
-    page_icon="🎨",
+    page_icon="🖼️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -189,6 +189,24 @@ st.markdown("""
     /* Selectbox container */
     .stSelectbox > div {
         background: transparent !important;
+    }
+    
+    /* Dropdown del selectbox */
+    div[data-baseweb="popover"] > div {
+        background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(157, 78, 221, 0.15) 100%) !important;
+        backdrop-filter: blur(15px) !important;
+        border: 1px solid rgba(0, 212, 255, 0.3) !important;
+        border-radius: 12px !important;
+    }
+    div[data-baseweb="popover"] > div > div {
+        background: transparent !important;
+    }
+    div[data-baseweb="popover"] > div > div > div {
+        color: rgba(255, 255, 255, 0.9) !important;
+        font-weight: 600 !important;
+    }
+    div[data-baseweb="popover"] > div > div > div:hover {
+        background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(157, 78, 221, 0.2) 100%) !important;
     }
     
     /* Text input container */
@@ -523,16 +541,10 @@ def create_pdf_with_crop_marks(image_pil, width_cm, height_cm, bleed_cm=0.5):
     # Guardar PDF en memoria
     pdf_bytes = io.BytesIO()
     doc.save(pdf_bytes)
+    doc.close()
     pdf_bytes.seek(0)
     
-    # Leer los bytes para retorno
-    pdf_data = pdf_bytes.getvalue()
-    
-    # Crear nuevo BytesIO con los datos
-    result = io.BytesIO(pdf_data)
-    result.seek(0)
-    
-    return result
+    return pdf_bytes
 
 def generate_receipt_pdf(client_name, items, subtotal, iva, total):
     """
@@ -648,12 +660,12 @@ def main():
                 border-right: 1px solid rgba(0, 212, 255, 0.2);
             }
             .header-container {
-                background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(157, 78, 221, 0.15) 100%);
+                background: linear-gradient(135deg, rgba(0, 212, 255, 0.25) 0%, rgba(157, 78, 221, 0.25) 100%);
                 backdrop-filter: blur(15px);
                 border-radius: 20px;
                 padding: 1.5rem 2rem;
-                border: 1px solid rgba(0, 212, 255, 0.3);
-                box-shadow: 0 8px 32px rgba(0, 212, 255, 0.2);
+                border: 1px solid rgba(0, 212, 255, 0.4);
+                box-shadow: 0 8px 32px rgba(0, 212, 255, 0.3);
                 margin-bottom: 2rem;
             }
             .card {
@@ -748,6 +760,34 @@ def main():
                 border-color: #00d4ff !important;
                 box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.2);
                 outline: none;
+            }
+            .stSelectbox > div > div > div[data-baseweb="select"] {
+                background: transparent !important;
+            }
+            .stSelectbox > div > div > div[data-baseweb="select"] > div {
+                background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%) !important;
+                color: rgba(255, 255, 255, 0.9) !important;
+                font-weight: 600 !important;
+            }
+            .stSelectbox > div > div > div[data-baseweb="select"] > div:hover {
+                background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(157, 78, 221, 0.2) 100%) !important;
+            }
+            /* Dropdown del selectbox */
+            div[data-baseweb="popover"] > div {
+                background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(157, 78, 221, 0.15) 100%) !important;
+                backdrop-filter: blur(15px) !important;
+                border: 1px solid rgba(0, 212, 255, 0.3) !important;
+                border-radius: 12px !important;
+            }
+            div[data-baseweb="popover"] > div > div {
+                background: transparent !important;
+            }
+            div[data-baseweb="popover"] > div > div > div {
+                color: rgba(255, 255, 255, 0.9) !important;
+                font-weight: 600 !important;
+            }
+            div[data-baseweb="popover"] > div > div > div:hover {
+                background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(157, 78, 221, 0.2) 100%) !important;
             }
             .stSelectbox > div {
                 background: transparent !important;
@@ -983,6 +1023,34 @@ def main():
                 border-color: #0066cc !important;
                 box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2);
                 outline: none;
+            }
+            .stSelectbox > div > div > div[data-baseweb="select"] {
+                background: transparent !important;
+            }
+            .stSelectbox > div > div > div[data-baseweb="select"] > div {
+                background: linear-gradient(135deg, rgba(0, 102, 204, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%) !important;
+                color: #333333 !important;
+                font-weight: 600 !important;
+            }
+            .stSelectbox > div > div > div[data-baseweb="select"] > div:hover {
+                background: linear-gradient(135deg, rgba(0, 102, 204, 0.2) 0%, rgba(157, 78, 221, 0.2) 100%) !important;
+            }
+            /* Dropdown del selectbox - Light Theme */
+            div[data-baseweb="popover"] > div {
+                background: linear-gradient(135deg, rgba(0, 102, 204, 0.15) 0%, rgba(157, 78, 221, 0.15) 100%) !important;
+                backdrop-filter: blur(15px) !important;
+                border: 1px solid rgba(0, 102, 204, 0.3) !important;
+                border-radius: 12px !important;
+            }
+            div[data-baseweb="popover"] > div > div {
+                background: transparent !important;
+            }
+            div[data-baseweb="popover"] > div > div > div {
+                color: #333333 !important;
+                font-weight: 600 !important;
+            }
+            div[data-baseweb="popover"] > div > div > div:hover {
+                background: linear-gradient(135deg, rgba(0, 102, 204, 0.2) 0%, rgba(157, 78, 221, 0.2) 100%) !important;
             }
             .stSelectbox > div {
                 background: transparent !important;
@@ -1366,7 +1434,7 @@ def main():
                                 st.info("Preparando descarga...")
                                 # Leer los bytes del PDF
                                 pdf_bytes.seek(0)
-                                pdf_data = pdf_bytes.read()
+                                pdf_data = pdf_bytes.getvalue()
                                 
                                 st.info(f"Tamaño del PDF: {len(pdf_data)} bytes")
                                 
