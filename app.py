@@ -11,8 +11,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from reportlab.lib.utils import ImageReader
 import streamlit.components.v1 as components
-from streamlit_cropper import st_cropper
-import rembg
+
 
 # ==============================================================================
 # 1. CONFIGURACIÓN DE PÁGINA STREAMLIT
@@ -31,12 +30,6 @@ def init_session_state():
     if 'theme_mode' not in st.session_state:
         st.session_state.theme_mode = 'light'
     
-    # Sesión en memoria de rembg con modelo ultraligero u2netp
-    if 'rembg_session' not in st.session_state:
-        try:
-            st.session_state.rembg_session = rembg.new_session('u2netp')
-        except Exception:
-            st.session_state.rembg_session = None
 
     # Catálogo de servicios por medida (Gran Formato) con ortografía corregida (ojales)
     if 'services_by_measure' not in st.session_state:
@@ -886,16 +879,18 @@ def create_standard_multipage_pdf(images_list, page_size_name='Carta', orientati
 # 8. MOTORES DE ELIMINACIÓN DE FONDO & GENERADOR DE ESTUDIO MANUAL CON PINCEL
 # ==============================================================================
 def remove_background_ai(img_pil):
-    """Eliminación de fondo automática inteligente por defecto con rembg (u2netp)"""
+    """Eliminación de fondo automática con IA (carga diferida para inicio ultra-rápido)"""
     try:
+        import rembg
         session = st.session_state.get('rembg_session')
-        if session is not None:
-            return rembg.remove(img_pil, session=session)
-        else:
-            return rembg.remove(img_pil)
-    except Exception as e:
-        # Respaldo si hay sobrecarga de memoria
+        if session is None:
+            session = rembg.new_session('u2netp')
+            st.session_state['rembg_session'] = session
+        return rembg.remove(img_pil, session=session)
+    except Exception:
+        # Respaldo automático ultrarrápido si la IA no está disponible o excede la memoria
         return remove_background_numpy(img_pil, target_color_rgb=(255, 255, 255), tolerance=40)
+
 
 def remove_background_numpy(img_pil, target_color_rgb=(255, 255, 255), tolerance=40, feather_edges=True):
     """Elimina el fondo de una imagen por color clave con aceleración NumPy"""
@@ -2040,14 +2035,18 @@ def main():
                 col_cr_view, col_cr_res = st.columns([6, 4], gap="medium")
                 with col_cr_view:
                     active_for_crop = st.session_state.working_png_img
-                    # streamlit-cropper con aspect_ratio=None permite recorte libre 100%
-                    cropped_preview = st_cropper(
-                        active_for_crop,
-                        realtime_update=True,
-                        box_color="#2563EB" if is_light else "#00D4FF",
-                        aspect_ratio=None,
-                        key="cropper_free_box"
-                    )
+                    try:
+                        from streamlit_cropper import st_cropper
+                        cropped_preview = st_cropper(
+                            active_for_crop,
+                            realtime_update=True,
+                            box_color="#2563EB" if is_light else "#00D4FF",
+                            aspect_ratio=None,
+                            key="cropper_free_box"
+                        )
+                    except Exception:
+                        cropped_preview = active_for_crop
+
                 with col_cr_res:
                     st.markdown("###### Resultado del Recorte:")
                     if cropped_preview is not None:
