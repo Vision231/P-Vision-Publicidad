@@ -1,17 +1,15 @@
 #!/bin/bash
 
 echo "========================================"
-echo "Visión Publicidad - Sistema de Gestión"
+echo "VISIÓN Y PUBLICIDAD - Sistema de Gestión & Diseño"
 echo "========================================"
 echo ""
-echo "Activando entorno virtual..."
-source venv/bin/activate
-echo ""
-echo "Instalando dependencias..."
-pip install -r requirements.txt
+if [ -f "venv/bin/activate" ]; then
+    echo "Activando entorno virtual..."
+    source venv/bin/activate
+fi
 echo ""
 echo "Iniciando aplicación..."
-echo "La aplicación se abrirá en su navegador."
-echo "Presione Ctrl+C para detener."
-echo ""
-streamlit run app.py
+PORT="${PORT:-8501}"
+streamlit run app.py --server.port $PORT --server.address 0.0.0.0
+

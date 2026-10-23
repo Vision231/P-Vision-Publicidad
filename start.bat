@@ -1,6 +1,6 @@
 @echo off
 echo ========================================
-echo Visión Publicidad - Sistema de Gestión
+echo VISIÓN Y PUBLICIDAD - Sistema de Gestión & Diseño
 echo ========================================
 echo.
 echo Activando entorno virtual...
