@@ -121,6 +121,7 @@ def apply_theme():
     is_light = st.session_state.theme_mode == 'light'
     
     common_css = """
+    <meta name="google" content="notranslate">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
         
@@ -131,8 +132,8 @@ def apply_theme():
             font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
         
-        /* No traducir las siglas COP */
-        .notranslate {
+        /* Proteger DOM de traducción automática que rompe React */
+        .notranslate, [data-testid="stWidgetLabel"] {
             translate: no !important;
         }
     </style>
